@@ -1,0 +1,38 @@
+@startuml Activity
+title Diagramme d'activité - Jeu GeomeTry
+
+start
+:Afficher menu principal;
+:Afficher liste des niveaux;
+:Sélectionner un niveau;
+
+if (Niveau sélectionné débloqué ?) then (Oui)
+    :Sélectionner un mode de jeu;
+    if (Mode sélectionné ?) then (Practice)
+        :Charger le niveau en mode practice;
+    else (Normal)
+        :Charger le niveau en mode normal;
+    endif
+    :Commencer le niveau;
+    while (Fin du niveau ?)
+        :Joueur avance automatiquement;
+        if (Bouton pressé ?) then (Oui)
+            :Sauter;
+        endif
+
+        if (Collision détectée ?) then (Oui)
+            if (Mode practice ?) then (Oui)
+                :Revenir au dernier point de contrôle;
+            else (Non)
+                :Afficher écran de défaite;
+                stop
+            endif
+        endif
+    endwhile
+    :Afficher écran de victoire;
+else (Non)
+    :Afficher message "Niveau non débloqué";
+endif
+
+stop
+@enduml
