@@ -1,0 +1,19 @@
+@startuml ShipState
+title Diagramme d'état du vaisseau - GeomeTry
+
+[*] --> Vivant
+
+state Vivant {
+    [*] --> Avance
+    Avance : Avance vers la droite au sol
+    Avance --> Vol : Appui sur \nla touche vol
+    Vol : Monte vers le haut
+    Vol --> Descend : Relâchement de \nla touche vol
+    Descend : Descend vers le sol
+    Descend --> Avance : Touche le sol
+}
+
+Vivant --> Mort : Collision avec un obstacle
+Mort --> [*]
+
+@enduml
