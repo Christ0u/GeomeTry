@@ -1,0 +1,98 @@
+@startuml
+
+class Game {
+    
+}
+
+class Level {
+
+}
+
+class Player {
+    + playerName : string
+
+}
+class Statistics {
+    - totalJumps : int
+    - totalAttempts : int
+    - collectedCoins : int
+    - completedLevels : int
+    + displayStatistics() : void
+}
+
+abstract Character {
+    # {static} defaultSpeed : float
+    # currentSpeed : float
+    # moveVector : Vector2
+    # gravity : float
+    # isAlive : bool
+    # currentPosition : Tuple
+    + {abstract} onClick() : void
+}
+
+' note right of Character : Pour l'instant, moveDirection est un bool\n 0 pour la droite et 1 pour la gauche
+
+
+class Cube {
+    + onClick() : void
+}
+class Ship {
+    + onClick() : void
+}
+class Wave {
+    - gravity = 0
+    + onClick() : void
+}
+
+abstract Portal {
+
+}
+
+' note top of CharacterPortal : Ce sont les portails qui vont\n modifier le type de joueur
+class CharacterPortal {
+    - portalType : PortalType
+    + transformPlayer(Player, PortalType)
+}
+
+class GravityPortal {
+    - gravityModifier : float
+}
+
+class SpeedPortal {
+    - speedModifier : float
+}
+
+class TeleportationPortal {
+    + teleportPlayer(x, y)
+}
+
+class Obstacle {
+    + 
+}
+
+enum PortalType {
+    CubePortal
+    ShipPortal
+    WavePortal
+}
+
+Player "1" -- "1" Character :  posséder 
+Player "1" -- "1" Statistics : posséder
+
+Game *-- Player
+Game *-- Level
+
+Level *-- Obstacle
+Level o-- Portal
+
+Character <|-- Cube
+Character <|-- Ship
+Character <|-- Wave
+
+Portal <|-- CharacterPortal
+
+Portal <|-- GravityPortal
+Portal <|-- SpeedPortal
+Portal <|-- TeleportationPortal
+
+@enduml
