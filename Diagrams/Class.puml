@@ -1,22 +1,39 @@
 @startuml
 
 class Game {
-    
+    - levels : List<Level>
+    - gameMode : GameMode
+    + launchLevel(Level, Player) : void
+    + endGame() : void
+    + placeCheckpoint() : void
+    + removeCheckpoint() : void
+    - restartPosition(Checkpoint) : void
 }
 
 class Level {
-
+    - levelId : int
+    - levelName : string
+    - difficulty : int [1-10]
+    - map : Map
+    
+    + generateLevel(map) : void
 }
 
 class Player {
     + playerName : string
 
 }
-class Statistics {
+class PlayerStatistics {
     - totalJumps : int
     - totalAttempts : int
     - collectedCoins : int
     - completedLevels : int
+    + displayStatistics() : void
+}
+
+class LevelStatistics {
+    - totalAttempts : int
+    - totalJumps : int
     + displayStatistics() : void
 }
 
@@ -28,6 +45,11 @@ abstract Character {
     # isAlive : bool
     # currentPosition : Tuple
     + {abstract} onClick() : void
+    ' Kill character ?? ' 
+}
+
+struct Checkpoint {
+    - checkpointPosition : Tuple
 }
 
 ' note right of Character : Pour l'instant, moveDirection est un bool\n 0 pour la droite et 1 pour la gauche
@@ -45,7 +67,7 @@ class Wave {
 }
 
 abstract Portal {
-
+    - portalPosition : Tuple
 }
 
 ' note top of CharacterPortal : Ce sont les portails qui vont\n modifier le type de joueur
@@ -56,10 +78,12 @@ class CharacterPortal {
 
 class GravityPortal {
     - gravityModifier : float
+    + modifyGravity(gravityModifier, Player) : void
 }
 
 class SpeedPortal {
     - speedModifier : float
+    + modifySpeed(speedModifier, Player) : void
 }
 
 class TeleportationPortal {
@@ -67,7 +91,8 @@ class TeleportationPortal {
 }
 
 class Obstacle {
-    + 
+    - obstaclePosition : Tuple
+    - obstacleType : ObstacleType
 }
 
 enum PortalType {
@@ -76,14 +101,28 @@ enum PortalType {
     WavePortal
 }
 
-Player "1" -- "1" Character :  posséder 
-Player "1" -- "1" Statistics : posséder
+enum ObstacleType {
+    Spike
+    SmallSpike
+    Blade
+    SawBlade
+}
 
-Game *-- Player
+enum GameMode {
+    Normal
+    Practice
+} 
+
+Player "1" -- "1" Character :  posséder 
+Player "1" -- "1" PlayerStatistics : posséder
+
+Game "1" -- "1" Player : jouer
 Game *-- Level
+Game "1" o-- "0..*" Checkpoint 
 
 Level *-- Obstacle
 Level o-- Portal
+Level "1" -left "1" LevelStatistics : posséder 
 
 Character <|-- Cube
 Character <|-- Ship
