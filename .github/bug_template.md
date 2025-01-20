@@ -11,3 +11,5 @@
 *Décrivez comment reproduire le problème. Veuillez utiliser une liste ordonnée et à illustrer le problème avec un maximum de captures d'écran.*
 
 ### Correctifs possibles
+
+*Donnez des pistes éventuelles qui permettraient la détection et la résolution du problème constaté.*
