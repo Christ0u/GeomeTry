@@ -8,11 +8,15 @@ public class UIManager : MonoBehaviour
 
     public void PlayGame()
     {
-        if(!Global.playMode)
+        if (!Global.playMode)
         {
             Global.playMode = true;
             playButton.gameObject.SetActive(false);
-        }
 
+            // Audio
+            AudioSource audio;
+            audio = GetComponent<AudioSource>();
+            audio.Play();
+        }
     }
 }
