@@ -76,3 +76,7 @@ crashlytics-build.properties
 
 # project settings
 /ProjectSettings
+
+# Default ignored files
+.idea
+
