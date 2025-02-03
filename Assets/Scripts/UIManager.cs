@@ -8,9 +8,9 @@ public class UIManager : MonoBehaviour
 
     public void PlayGame()
     {
-        if(!Global.playMode)
+        if(!GameManager.playMode)
         {
-            Global.playMode = true;
+            GameManager.playMode = true;
             playButton.gameObject.SetActive(false);
         }
 

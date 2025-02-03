@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Global : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public static bool playMode = false;
 }
