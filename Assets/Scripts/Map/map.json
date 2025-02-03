@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"Stereo Madness","id":1,"map":[{"type":"block","x":10,"y":0},{"type":"spike","x":15,"y":0},{"type":"smallSpike","x":16,"y":0},{"type":"spike","x":20,"y":2}],"music":{"name":"Stereo Madness","path":"stereo_madness.mp4"}}
