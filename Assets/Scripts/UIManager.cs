@@ -5,12 +5,13 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] Button playButton;
+    [SerializeField] GameManager gameManager;
 
     public void PlayGame()
     {
-        if(!GameManager.playMode)
+        if(!gameManager.playMode)
         {
-            GameManager.playMode = true;
+            gameManager.playMode = true;
             playButton.gameObject.SetActive(false);
         }
 
