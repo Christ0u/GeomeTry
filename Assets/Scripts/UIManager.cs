@@ -5,18 +5,19 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] Button playButton;
+    [SerializeField] GameManager gameManager;
 
     public void PlayGame()
     {
-        if (!Global.playMode)
+        if(!gameManager.playMode)
         {
-            Global.playMode = true;
+            gameManager.playMode = true;
             playButton.gameObject.SetActive(false);
 
             // Audio
-            AudioSource audio;
-            audio = GetComponent<AudioSource>();
-            audio.Play();
+            // AudioSource audio;
+            // audio = GetComponent<AudioSource>();
+            // audio.Play();
         }
     }
 }
