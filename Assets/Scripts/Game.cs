@@ -22,6 +22,8 @@ public class Game : MonoBehaviour
         // Parsing du fichier JSON
         JSONObject map = new JSONObject(rawMap);
 
+        Debug.Log(map["Map"]);
+
         // Construction de la map
         foreach (JSONObject item in map["map"])
         {
@@ -33,13 +35,14 @@ public class Game : MonoBehaviour
             Vector2 position = new Vector2(x, y);
 
             // Création d'un élément de la map à partir du prefab correspondant
-            if ($"{item["type"].stringValue}" == "spike")
+            switch ($"{item["type"].stringValue}")
             {
-                Instantiate(Spike, position, Quaternion.identity); // Quaternion.identity = pas de rotation
-            }
-            else if ($"{item["type"].stringValue}" == "block")
-            {
-                Instantiate(Tile, position, Quaternion.identity); // Quaternion.identity = pas de rotation
+                case "spike":
+                    Instantiate(Spike, position, Quaternion.identity); // Quaternion.identity = pas de rotation
+                    break;
+                case "block":
+                    Instantiate(Tile, position, Quaternion.identity); // Quaternion.identity = pas de rotation
+                    break;
             }
         }
     }
