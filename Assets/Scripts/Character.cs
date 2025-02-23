@@ -14,6 +14,8 @@ public class Character : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Transform groundCheckObject; // On va laisser mon groundCheck on m'a dit que c'est bien vouala. (Source sûre => étudiant de l'Enjmin)
     [SerializeField] private LayerMask layerMask;
+    
+    [SerializeField] private ParticleSystem _particleSystem;
 
     void Start()
     {
@@ -37,6 +39,4 @@ public class Character : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocityX, JumpForce);
         }
     }
-
-
 }
