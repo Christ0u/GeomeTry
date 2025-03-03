@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
     private const float JumpForce = 13.0f;
     
     private bool _isGrounded;
+    private bool _isDead;
     
     [SerializeField] GameManager gameManager;
     [SerializeField] Rigidbody2D rb;
@@ -17,9 +18,13 @@ public class Character : MonoBehaviour
     
     [SerializeField] private ParticleSystem _particleSystem;
 
+    private Vector3 startPosition;
+
     void Start()
     {
+        startPosition = transform.position;
         currentSpeed = DefaultSpeed;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
     
     void Update()
@@ -38,5 +43,19 @@ public class Character : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, JumpForce);
         }
+    }
+
+    public void Die()
+    {
+        _isDead = true;
+        rb.linearVelocity = Vector2.zero;
+        Invoke(nameof(Respawn), 0f);
+    }
+
+    void Respawn()
+    {
+        transform.position = startPosition;
+        rb.linearVelocity = Vector2.zero;
+        _isDead = false;
     }
 }
