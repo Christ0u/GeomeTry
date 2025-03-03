@@ -7,6 +7,12 @@ public class DeathZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reload la scene
+        Character character = other.GetComponent<Character>();
+
+        if (character != null)
+
+        {
+            character.Die();
+        }
     }
 }
