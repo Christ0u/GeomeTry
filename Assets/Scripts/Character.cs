@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
     [SerializeField] private ParticleSystem _particleSystem;
 
     private Vector3 startPosition;
+    private Transform _particleSystemParent;
 
     void Start()
     {
@@ -24,6 +25,9 @@ public class Character : MonoBehaviour
         startPosition = transform.position;
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        _particleSystemParent = new GameObject("ParticleSystemParent").transform;
+
     }
     
     void FixedUpdate()
@@ -37,8 +41,16 @@ public class Character : MonoBehaviour
 
         RotateSprite();
     }
+
     void Update()
     {
+        // Gestion du système de particule
+        if (!_isGrounded) {
+            DettachParticleSystem();
+        } else {
+            ReattachParticleSystem();
+        }
+
         if (Input.GetKey(KeyCode.Space)) {
             Jump();
         }
@@ -58,7 +70,7 @@ public class Character : MonoBehaviour
     private void Jump()
     {
         if (_isGrounded) {
-        {
+            DettachParticleSystem();
             rb.linearVelocity = new Vector2(rb.linearVelocityX, JumpForce);
             _isGrounded = false;  
         }
@@ -92,6 +104,17 @@ public class Character : MonoBehaviour
     {
         transform.position = startPosition;
         rb.linearVelocity = Vector2.zero;
+    }
+
+    private void DettachParticleSystem(){
+        _particleSystem.Stop();
+        _particleSystem.transform.SetParent(_particleSystemParent, true);
+    }
+
+    private void ReattachParticleSystem(){
+        _particleSystem.Play();
+        _particleSystem.transform.SetParent(transform, true);
+        _particleSystem.transform.localPosition = new Vector3(0, -0.5f, 0); 
     }
 
     // Debug stuff
