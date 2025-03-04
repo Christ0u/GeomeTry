@@ -9,10 +9,10 @@ public class Character : MonoBehaviour
     private const float JumpForce = 13.0f;
     
     private bool _isGrounded;
-    private bool _isDead;
     
     [SerializeField] GameManager gameManager;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private ParticleSystem _particleSystem;
 
@@ -20,6 +20,7 @@ public class Character : MonoBehaviour
 
     void Start()
     {
+        _isGrounded = true; 
         startPosition = transform.position;
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
@@ -29,17 +30,33 @@ public class Character : MonoBehaviour
     {
         if (!gameManager.playMode) return; // Si le jeu est pas lancé
 
-        _isGrounded = Physics2D.OverlapCircle(groundCheckObject.position, 0.1f, layerMask);
-
         transform.Translate(new Vector2(currentSpeed * Time.deltaTime, 0));
-        Jump();
+        CheckGrounded();
+        
+        // si on veut implementer la modification de gravitée c'est ici.
+
+        RotateSprite();
+    }
+
+    private void CheckGrounded()
+    {
+        Vector2 frontRayOrigin = rb.position + new Vector2(0.5f, 0);
+        Vector2 backRayOrigin = rb.position - new Vector2(0.47f, 0);
+
+        RaycastHit2D frontHit = Physics2D.Raycast(frontRayOrigin, Vector2.down, 0.55f, groundLayer);
+        RaycastHit2D backHit = Physics2D.Raycast(backRayOrigin, Vector2.down, 0.55f, groundLayer);
+
+        _isGrounded = frontHit.collider != null || backHit.collider != null;
     }
 
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        if (_isGrounded) {
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, JumpForce);
+            _isGrounded = false;  
+        }
+    }
 
     private void RotateSprite()
     {
@@ -61,15 +78,22 @@ public class Character : MonoBehaviour
 
     public void Die()
     {
-        _isDead = true;
         rb.linearVelocity = Vector2.zero;
         Invoke(nameof(Respawn), 0f);
     }
 
-    void Respawn()
+    private void Respawn()
     {
         transform.position = startPosition;
         rb.linearVelocity = Vector2.zero;
-        _isDead = false;
+    }
+
+    // Debug stuff
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(rb.position + new Vector2(0.5f,0), rb.position  + new Vector2(0.5f,0) + Vector2.down * 0.55f);
+        Gizmos.DrawLine(rb.position -  new Vector2(0.47f,0), rb.position -  new Vector2(0.47f,0) + Vector2.down * 0.55f);
+
     }
 }
