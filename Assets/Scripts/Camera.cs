@@ -10,7 +10,7 @@ public class Camera : MonoBehaviour
     private bool _isFollowing = false;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!_isFollowing && player != null)
         {

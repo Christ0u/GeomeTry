@@ -26,7 +26,7 @@ public class Character : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
     
-    void Update()
+    void FixedUpdate()
     {
         if (!gameManager.playMode) return; // Si le jeu est pas lancé
 
@@ -36,6 +36,12 @@ public class Character : MonoBehaviour
         // si on veut implementer la modification de gravitée c'est ici.
 
         RotateSprite();
+    }
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Space)) {
+            Jump();
+        }
     }
 
     private void CheckGrounded()
