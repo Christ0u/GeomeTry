@@ -5,8 +5,9 @@ public class Character : MonoBehaviour
 {
     public float currentSpeed;
     
-    private const float DefaultSpeed = 8.0f;
+    private const float DefaultSpeed = 6.0f;
     private const float JumpForce = 13.0f;
+    private const float RotationSpeed = 280.0f;
     
     private bool _isGrounded;
     
@@ -21,6 +22,7 @@ public class Character : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1.3f; // Game speed
         _isGrounded = true; 
         startPosition = transform.position;
         currentSpeed = DefaultSpeed;
