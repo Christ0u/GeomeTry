@@ -13,9 +13,7 @@ public class Character : MonoBehaviour
     
     [SerializeField] GameManager gameManager;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] Transform groundCheckObject; // On va laisser mon groundCheck on m'a dit que c'est bien vouala. (Source sûre => étudiant de l'Enjmin)
-    [SerializeField] private LayerMask layerMask;
-    
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private ParticleSystem _particleSystem;
 
     private Vector3 startPosition;
@@ -42,6 +40,22 @@ public class Character : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, JumpForce);
+
+    private void RotateSprite()
+    {
+        if (!_isGrounded)
+        {
+            // * Time.deltaTime pour que la rotation soit indépendante du framerate
+            float rotationAmount = RotationSpeed * Time.deltaTime; 
+            spriteRenderer.transform.Rotate(0, 0, -rotationAmount);
+
+        } else { // il faudrait un petit timer qu'on reset si on detect un saut pour pas snap tout de suite.
+        
+            float currentRotation = spriteRenderer.transform.eulerAngles.z;
+            float snappedRotation = Mathf.Round(currentRotation / 90) * 90;
+            float smoothedRotation = Mathf.LerpAngle(currentRotation, snappedRotation, 0.25f);
+
+            spriteRenderer.transform.rotation = Quaternion.Euler(0, 0, smoothedRotation);
         }
     }
 
