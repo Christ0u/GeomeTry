@@ -4,18 +4,18 @@ using UnityEngine.SceneManagement;
 public class Character : MonoBehaviour
 {
     public float currentSpeed;
-    
+
     private const float DefaultSpeed = 8.0f;
     private const float JumpForce = 13.0f;
-    
+
     private bool _isGrounded;
-    private bool _isDead;
-    
+    //private bool _isDead;
+
     [SerializeField] GameManager gameManager;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Transform groundCheckObject; // On va laisser mon groundCheck on m'a dit que c'est bien vouala. (Source sûre => étudiant de l'Enjmin)
     [SerializeField] private LayerMask layerMask;
-    
+
     [SerializeField] private ParticleSystem _particleSystem;
 
     private Vector3 startPosition;
@@ -25,12 +25,19 @@ public class Character : MonoBehaviour
         startPosition = transform.position;
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        // RaycastHit2D raycastHig2D = Physics2D.Raycast(transform.position, Vector2.right);
+
+        // if (raycastHig2D)
+        // {
+        //     Debug.Log("Something was hit!");
+        // }
     }
-    
+
     void Update()
     {
         if (!gameManager.playMode) return; // Si le jeu est pas lancé
-
+        
         _isGrounded = Physics2D.OverlapCircle(groundCheckObject.position, 0.1f, layerMask);
 
         transform.Translate(new Vector2(currentSpeed * Time.deltaTime, 0));
@@ -47,7 +54,7 @@ public class Character : MonoBehaviour
 
     public void Die()
     {
-        _isDead = true;
+        //_isDead = true;
         rb.linearVelocity = Vector2.zero;
         Invoke(nameof(Respawn), 0f);
     }
@@ -56,6 +63,6 @@ public class Character : MonoBehaviour
     {
         transform.position = startPosition;
         rb.linearVelocity = Vector2.zero;
-        _isDead = false;
+        //_isDead = false;
     }
 }

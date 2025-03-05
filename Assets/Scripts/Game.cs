@@ -17,21 +17,20 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        // Lecture du fichier JSON
-        string mapPath = Application.dataPath + "/Scripts/Map/map.json";
-        string rawMap = File.ReadAllText(mapPath);
+        // Chargement du fichier JSON
+        TextAsset jsonFile = Resources.Load<TextAsset>("maps/map");
+
+        // Lecture du fichier
+        string rawMap = jsonFile.text;
 
         // Parsing du fichier JSON
         JSONObject map = new JSONObject(rawMap);
 
-        Debug.Log(map["Map"]);
-
         //Construction de la map
         foreach (JSONObject item in map["map"])
         {
-            Debug.Log(item["type"].stringValue + " aux coordonnées (" + item["x"].intValue + "; " + item["y"].intValue + ")");
-
             Vector3 position = tilemap.GetCellCenterWorld(new Vector3Int(item["x"].intValue, item["y"].intValue, 0));
+
             // Ajustement de la position pour que l'objet soit centré une case
             position += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
 
