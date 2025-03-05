@@ -7,10 +7,9 @@ public class Camera : MonoBehaviour
     
     [SerializeField] private Transform player;
     
-    private float _smoothSpeed = 0.125f;
-    private float _startFollowingXPosition = 0.0f; // La caméra commence à suivre le cube à partir de cette position en X
-    public Vector3 offset; 
-
+    private float _smoothSpeed = 0.05f;
+    private float _startFollowingXPosition = -5.0f; // La caméra commence à suivre le cube à partir de cette position en X
+    public Vector3 offset;
     private bool _isFollowing = false;
     
     // A enlever plus tard
@@ -37,11 +36,14 @@ public class Camera : MonoBehaviour
 
         if(_isFollowing && player != null)
         {
-            var desiredPosition = player.position + offset;
+            var desiredPosition = player.position + new Vector3(5f, 0, -10f); // + offset
             var smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed);
-            var freezeYPosition = new Vector3(smoothedPosition.x, transform.position.y, transform.position.z);
+
+            if (smoothedPosition.y < 4f) {
+                smoothedPosition.y = 4f;
+            }
             
-            transform.position = freezeYPosition;
+            transform.position = smoothedPosition;
         }
     }
 }
