@@ -3,15 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class Character : MonoBehaviour
 {
+    private GameManager _gameManager;
+    
     public float currentSpeed;
     
-    private const float DefaultSpeed = 6.0f;
+    private const float DefaultSpeed = 6.5f;
     private const float JumpForce = 13.0f;
     private const float RotationSpeed = 280.0f;
     
     private bool _isGrounded;
     
-    [SerializeField] GameManager gameManager;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -24,6 +25,7 @@ public class Character : MonoBehaviour
     {
         Time.timeScale = 1.3f; // Game speed
         _isGrounded = true; 
+        _gameManager = GameManager.Instance;
         startPosition = transform.position;
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
@@ -34,7 +36,7 @@ public class Character : MonoBehaviour
     
     void FixedUpdate()
     {
-        if (!gameManager.playMode) return; // Si le jeu est pas lancé
+        if (!_gameManager.PlayMode) return; // Si le jeu est pas lancé
 
         transform.Translate(new Vector2(currentSpeed * Time.deltaTime, 0));
         CheckGrounded();

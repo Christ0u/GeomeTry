@@ -1,23 +1,31 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] Button playButton;
-    [SerializeField] GameManager gameManager;
-
-    public void PlayGame()
+    private GameManager _gameManager;
+    
+    private void Start()
     {
-        if(!gameManager.playMode)
-        {
-            gameManager.playMode = true;
-            playButton.gameObject.SetActive(false);
+        _gameManager = GameManager.Instance;
+    }
 
-            // Audio
-            // AudioSource audio;
-            // audio = GetComponent<AudioSource>();
-            // audio.Play();
-        }
+    public void OnClickSwitchSceneButton(string sceneName)
+    {
+        StartCoroutine(_gameManager.LoadScene(sceneName));
+    }
+    
+    // A modifier plus tard
+    public void OnClickLevelButton()
+    {
+        StartCoroutine(_gameManager.LoadScene("Level"));
+        _gameManager.PlayMode = true;
+        
+        // TODO
+        // Audio
+        // AudioSource audio;
+        // audio = GetComponent<AudioSource>();
+        // audio.Play();
     }
 }
