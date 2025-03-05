@@ -10,19 +10,19 @@ public class UIManager : MonoBehaviour
     {
         _gameManager = GameManager.Instance;
     }
+
+    public void OnClickSwitchSceneButton(string sceneName)
+    {
+        StartCoroutine(_gameManager.LoadScene(sceneName));
+    }
     
-    public void OnClickPlayButton()
+    // A modifier plus tard
+    public void OnClickLevelButton()
     {
         StartCoroutine(_gameManager.LoadScene("Level"));
         _gameManager.PlayMode = true;
-    }
-    
-    public void OnSelectLevel()
-    {
+        
         // TODO
-        
-        // Changer le playmode ici
-        
         // Audio
         // AudioSource audio;
         // audio = GetComponent<AudioSource>();
