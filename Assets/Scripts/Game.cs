@@ -7,32 +7,42 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine.Tilemaps; // Dépendance externe : https://assetstore.unity.com/packages/tools/input-management/json-object-710#description
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class Game : MonoBehaviour
 {
     public GameObject Spike;
     public GameObject Tile;
     public GameObject Character;
+    public GameObject Ground;
     public Tilemap tilemap;
 
     void Start()
     {
-        // Lecture du fichier JSON
-        string mapPath = Application.dataPath + "/Scripts/Map/map.json";
-        string rawMap = File.ReadAllText(mapPath);
+        #region Gestion de la map
+        // Chargement du fichier JSON
+        TextAsset jsonFile = Resources.Load<TextAsset>("maps/map");
+
+        // Lecture du fichier
+        string rawMap = jsonFile.text;
 
         // Parsing du fichier JSON
         JSONObject map = new JSONObject(rawMap);
 
-        Debug.Log(map["Map"]);
+        int lastObjectX = 0;
 
         //Construction de la map
         foreach (JSONObject item in map["map"])
         {
-            Debug.Log(item["type"].stringValue + " aux coordonnées (" + item["x"].intValue + "; " + item["y"].intValue + ")");
+            // Récupération de l'abscisse du dernier objet a instancier
+            if (lastObjectX < item["x"].intValue)
+            {
+                lastObjectX = item["x"].intValue;
+            }
 
             Vector3 position = tilemap.GetCellCenterWorld(new Vector3Int(item["x"].intValue, item["y"].intValue, 0));
-            // Ajustement de la position pour que l'objet soit centré une case
+
+            // Ajustement de la position pour que l'objet soit centré sur une case de la tilemap
             position += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
 
             switch ($"{item["type"].stringValue}")
@@ -47,6 +57,42 @@ public class Game : MonoBehaviour
                     break;
             }
         }
+
+        #endregion
+
+        // #region Gestion du sol v1
+
+        // Debug.Log("Coordonnée X du dernier objet : " + lastObjectX);
+
+        // // Pas propre tel quel
+        // int groundInitialPosition = -15;
+
+        // for (int x = groundInitialPosition; x <= lastObjectX; x++)
+        // {
+        //     Vector3 groundPosition = tilemap.GetCellCenterWorld(new Vector3Int(x, -1, 0));
+        //     groundPosition += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
+        //     Instantiate(Ground, groundPosition, Quaternion.identity, tilemap.transform);
+        // }
+
+        // #endregion
+
+        #region Gestion du sol v2
+
+        Debug.Log("lastObjectX = " + lastObjectX);
+        int groundInitialPosition = -15;
+
+        // Définition de la taille du sol fonction de la taille du niveau
+        int groundSize = lastObjectX - groundInitialPosition;
+        Ground.transform.localScale = tilemap.GetCellCenterWorld(new Vector3Int(groundSize, 1, 0));
+    
+        // Calcul de la position du sol
+        Vector3 groundPosition = tilemap.GetCellCenterWorld(new Vector3Int((lastObjectX + 1 - Mathf.Abs(groundInitialPosition))/2, -1, 0));
+        groundPosition += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
+
+        // Instanciation du sol
+        Instantiate(Ground, groundPosition, Quaternion.identity, tilemap.transform);
+
+        #endregion
     }
 
     // void Update()
