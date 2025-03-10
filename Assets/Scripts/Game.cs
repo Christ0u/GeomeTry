@@ -15,6 +15,8 @@ public class Game : MonoBehaviour
     public GameObject Tile;
     public GameObject Character;
     public GameObject Ground;
+    public GameObject ShipPortal;
+    public GameObject CubePortal;
     public Tilemap tilemap;
 
     void Start()
@@ -55,11 +57,29 @@ public class Game : MonoBehaviour
                     // Instanciation d'un Spike dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
                     Instantiate(Tile, position, Quaternion.identity, tilemap.transform);
                     break;
+                case "shipPortal":
+                    // Instanciation d'un shipPortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
+                    Instantiate(ShipPortal, position, Quaternion.identity, tilemap.transform);
+                    break;
+                // case "cubePortal":
+                //     // Instanciation d'un cubePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
+                //     Instantiate(CubePortal, position, Quaternion.identity, tilemap.transform);
+                //     break;
+                // case "wavePortal":  
+                //     // Instanciation d'un wavePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
+                //     Instantiate(WavePortal, position, Quaternion.identity, tilemap.transform);
+                //     break;
             }
+
         }
+        // Instanciation du personnage et de la caméra
+        Instantiate(Character, tilemap.GetCellCenterWorld(new Vector3Int(-10, 1, 0)) + new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0), Quaternion.identity, tilemap.transform);
+
+        Camera cameraInstance = FindFirstObjectByType<Camera>();
+        cameraInstance.player = GameObject.Find("CubePrefab(Clone)").transform;
 
         #endregion
-
+ 
         // #region Gestion du sol v1
 
         // Debug.Log("Coordonnée X du dernier objet : " + lastObjectX);
