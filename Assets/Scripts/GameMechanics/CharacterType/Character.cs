@@ -21,6 +21,8 @@ public abstract class Character : MonoBehaviour
     protected Vector3 startPosition;
     protected Transform _particleSystemParent;
 
+    protected bool keyPressed = false;
+
     protected virtual void Start()
     {
         Time.timeScale = 1.3f; // Game speed
@@ -45,16 +47,12 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Update()
     {
-        // Gestion du système de particule
-        if (!CheckGrounded()) {
-            DettachParticleSystem();
-        } else {
-            ReattachParticleSystem();
-        }
-
         if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) {
-            onClick();
+            keyPressed = true;
+        } else {
+            keyPressed = false;
         }
+        onClick();
     }
 
     public abstract void onClick();

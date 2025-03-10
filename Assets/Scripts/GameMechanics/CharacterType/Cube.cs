@@ -1,10 +1,25 @@
 using UnityEngine;
 
 public class Cube : Character
-{    
+{
+    protected override void Update()
+    {
+        // Gestion du système de particule
+        if (!CheckGrounded()) {
+            DettachParticleSystem();
+        } else {
+            ReattachParticleSystem();
+        }
+
+        base.Update();
+
+    }
+
     public override void onClick()
     {
-        Jump();
+        if (keyPressed) {
+            Jump();
+        }
     }
 
     private void Jump()
