@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb07ca6192f644c4082344e7877686b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   offset: {x: 0, y: 0, z: -1}
 --- !u!1 &619394800
 GameObject:
@@ -652,6 +653,7 @@ MonoBehaviour:
   Ground: {fileID: 8359773978881231276, guid: 952d0ad4e02e5d04e8d9f86c9c30c667, type: 3}
   ShipPortal: {fileID: 7772492711769105817, guid: 8502b71038cb9407fa32fb7e834e1604, type: 3}
   CubePortal: {fileID: 7772492711769105817, guid: 4597a458b68c34b1bb2c702b75280c5c, type: 3}
+  WavePortal: {fileID: 7772492711769105817, guid: bd108810da8e3c44eb8fb44d66318955, type: 3}
   tilemap: {fileID: 1237142356}
 --- !u!114 &1280889637
 MonoBehaviour:
