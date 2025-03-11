@@ -45,6 +45,8 @@ public class CharacterPortal : MonoBehaviour
         if (newCharacterPrefab != null)
         {
             Vector3 position = character.transform.position;
+            position.y += 0.1f;
+
             Quaternion rotation = character.transform.rotation;
 
             // Merci Christ0u pour le tips 

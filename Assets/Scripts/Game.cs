@@ -17,6 +17,7 @@ public class Game : MonoBehaviour
     public GameObject Ground;
     public GameObject ShipPortal;
     public GameObject CubePortal;
+    public GameObject WavePortal;
     public Tilemap tilemap;
 
     void Start()
@@ -61,14 +62,14 @@ public class Game : MonoBehaviour
                     // Instanciation d'un shipPortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
                     Instantiate(ShipPortal, position, Quaternion.identity, tilemap.transform);
                     break;
-                // case "cubePortal":
-                //     // Instanciation d'un cubePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                //     Instantiate(CubePortal, position, Quaternion.identity, tilemap.transform);
-                //     break;
-                // case "wavePortal":  
-                //     // Instanciation d'un wavePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                //     Instantiate(WavePortal, position, Quaternion.identity, tilemap.transform);
-                //     break;
+                case "cubePortal":
+                    // Instanciation d'un cubePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
+                    Instantiate(CubePortal, position, Quaternion.identity, tilemap.transform);
+                    break;
+                case "wavePortal":  
+                    // Instanciation d'un wavePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
+                    Instantiate(WavePortal, position, Quaternion.identity, tilemap.transform);
+                    break;
             }
 
         }
