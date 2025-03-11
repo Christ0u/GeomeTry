@@ -5,7 +5,7 @@ public class Camera : MonoBehaviour
 {
     private GameManager _gameManager; // A enlever plus tard
     
-    [SerializeField] private Transform player;
+    [SerializeField] public Transform player;
     
     private float _smoothSpeed = 0.05f;
     private float _startFollowingXPosition = -5.0f; // La caméra commence à suivre le cube à partir de cette position en X
