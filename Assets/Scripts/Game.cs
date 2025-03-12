@@ -1,14 +1,6 @@
 using UnityEngine;
-using System.IO;
-using Defective.JSON;
-using System;
-using JetBrains.Annotations;
-using System.Runtime.CompilerServices;
-using UnityEditor;
-using UnityEngine.Tilemaps; // Dépendance externe : https://assetstore.unity.com/packages/tools/input-management/json-object-710#description
-using System.Collections.Generic;
-using Unity.VisualScripting;
-
+using Defective.JSON; // Dépendance externe : https://assetstore.unity.com/packages/tools/input-management/json-object-710#description
+using UnityEngine.Tilemaps;
 public class Game : MonoBehaviour
 {
     public GameObject Spike;
@@ -22,7 +14,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        #region Gestion de la map
+        #region Génération de le map
         // Chargement du fichier JSON
         TextAsset jsonFile = Resources.Load<TextAsset>("maps/map");
 
@@ -66,13 +58,17 @@ public class Game : MonoBehaviour
                     // Instanciation d'un cubePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
                     Instantiate(CubePortal, position, Quaternion.identity, tilemap.transform);
                     break;
-                case "wavePortal":  
+                case "wavePortal":
                     // Instanciation d'un wavePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
                     Instantiate(WavePortal, position, Quaternion.identity, tilemap.transform);
                     break;
             }
 
         }
+
+        #endregion
+
+        #region Génération du personnage et de la caméra
         // Instanciation du personnage et de la caméra
         Instantiate(Character, tilemap.GetCellCenterWorld(new Vector3Int(-10, 1, 0)) + new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0), Quaternion.identity, tilemap.transform);
 
@@ -80,77 +76,29 @@ public class Game : MonoBehaviour
         cameraInstance.player = GameObject.Find("CubePrefab(Clone)").transform;
 
         #endregion
- 
-        // #region Gestion du sol v1
 
-        // Debug.Log("Coordonnée X du dernier objet : " + lastObjectX);
+        #region Génération du sol
 
-        // // Pas propre tel quel
-        // int groundInitialPosition = -15;
+        int offset = 20;
 
-        // for (int x = groundInitialPosition; x <= lastObjectX; x++)
-        // {
-        //     Vector3 groundPosition = tilemap.GetCellCenterWorld(new Vector3Int(x, -1, 0));
-        //     groundPosition += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
-        //     Instantiate(Ground, groundPosition, Quaternion.identity, tilemap.transform);
-        // }
+        // Position initiale du personnage
+        int characterOrigin = (int)Character.transform.position.x;
 
-        // #endregion
+        // Définition des coordonnées du sol
+        int groundOrigin = characterOrigin - offset;
+        int groundEnd = lastObjectX + offset;
 
-        #region Gestion du sol v2
+        // Définition de la taille du sol
+        int groundSize = groundEnd - groundOrigin;
+        Vector3 groundScale = tilemap.GetCellCenterWorld(new Vector3Int(groundSize, 1, 0));
 
-        Debug.Log("lastObjectX = " + lastObjectX);
-        int groundInitialPosition = -15;
-
-        // Définition de la taille du sol fonction de la taille du niveau
-        int groundSize = lastObjectX - groundInitialPosition;
-        Ground.transform.localScale = tilemap.GetCellCenterWorld(new Vector3Int(groundSize, 1, 0));
-    
-        // Calcul de la position du sol
-        Vector3 groundPosition = tilemap.GetCellCenterWorld(new Vector3Int((lastObjectX + 1 - Mathf.Abs(groundInitialPosition))/2, -1, 0));
-        groundPosition += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
+        // Définitioin de la position du sol
+        Vector3 groundPosition = tilemap.GetCellCenterWorld(new Vector3Int((groundEnd + groundOrigin) / 2, -1, 0)); groundPosition += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
 
         // Instanciation du sol
-        Instantiate(Ground, groundPosition, Quaternion.identity, tilemap.transform);
+        GameObject groundInstance = Instantiate(Ground, groundPosition, Quaternion.identity, tilemap.transform);
+        groundInstance.transform.localScale = groundScale;
 
         #endregion
     }
-
-    // void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.P))
-    //     {
-    //         string exportPath = Application.dataPath + "/Scripts/Map/exported_map.json";
-    //         ExportMapElementsToJSON(exportPath);
-    //         Debug.Log("Map exported to " + exportPath);
-    //     }
-    // }
-
-    // public void ExportMapElementsToJSON(string filePath)
-    // {
-    //     List<JSONObject> elements = new List<JSONObject>();
-
-    //     foreach (Transform child in tilemap.transform)
-    //     {
-    //         Vector3Int cellPosition = tilemap.WorldToCell(child.position);
-    //         string type = child.gameObject.name.Contains("Spike") ? "spike" : "block";
-
-    //         JSONObject element = new JSONObject();
-    //         element.AddField("type", type);
-    //         element.AddField("x", cellPosition.x);
-    //         element.AddField("y", cellPosition.y);
-
-    //         elements.Add(element);
-    //     }
-
-    //     JSONObject map = new JSONObject();
-    //     JSONObject jsonArray = new JSONObject(JSONObject.Type.Array);
-    //     foreach (var element in elements)
-    //     {
-    //         jsonArray.Add(element);
-    //     }
-    //     map.AddField("map", jsonArray);
-
-    //     File.WriteAllText(filePath, map.ToString());
-    // }
 }

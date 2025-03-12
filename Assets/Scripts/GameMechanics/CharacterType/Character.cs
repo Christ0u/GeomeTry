@@ -4,49 +4,51 @@ using UnityEngine.SceneManagement;
 public abstract class Character : MonoBehaviour
 {
     protected GameManager _gameManager;
-    
     public float currentSpeed;
-    
     protected const float DefaultSpeed = 6.5f;
     protected float jumpForce = 13.5f;
     protected float rotationSpeed = 280.0f;
-    
     protected bool _isGrounded;
-    
+
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected ParticleSystem _particleSystem;
 
     protected Vector3 startPosition;
-
     protected bool keyPressed = false;
+    Animator animator;
 
     protected virtual void Start()
     {
         Time.timeScale = 1.5f; // Game speed
-        _isGrounded = true; 
+        _isGrounded = true;
         _gameManager = GameManager.Instance;
         startPosition = transform.position;
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        animator = GetComponent<Animator>();
     }
-    
+
     protected virtual void FixedUpdate()
     {
         if (!_gameManager.PlayMode) return; // Si le jeu est pas lancé
 
         transform.Translate(new Vector2(currentSpeed * Time.deltaTime, 0));
         CheckGrounded();
-        
+
         HandleMovement();
     }
 
     protected virtual void Update()
     {
-        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) {
+        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        {
             keyPressed = true;
-        } else {
+        }
+        else
+        {
             keyPressed = false;
         }
         onClick();
@@ -65,7 +67,7 @@ public abstract class Character : MonoBehaviour
         return frontHit.collider != null || backHit.collider != null;
     }
 
-    protected virtual void HandleMovement() 
+    protected virtual void HandleMovement()
     {
         // Cube jump
         // Ship burst
@@ -75,14 +77,24 @@ public abstract class Character : MonoBehaviour
 
     public virtual void Die()
     {
+        currentSpeed = 0.0f;
         rb.linearVelocity = Vector2.zero;
-        Invoke(nameof(Respawn), 0f);
+
+        animator.Play("DeathAnimation");
+        this.enabled = false; // Désactivation du script
+        rb.gravityScale = 0.0f;
+
+        Invoke(nameof(Respawn), 1.0f);
     }
 
     protected virtual void Respawn()
     {
         transform.position = startPosition;
+        currentSpeed = DefaultSpeed;
         rb.linearVelocity = Vector2.zero;
+
+        this.enabled = true; // Réactivation du script
+        rb.gravityScale = 4.0f;
     }
 
     protected void DettachParticleSystem()
@@ -93,13 +105,13 @@ public abstract class Character : MonoBehaviour
     protected void ReattachParticleSystem()
     {
         _particleSystem.Play();
-        _particleSystem.transform.localPosition = new Vector3(0, -0.5f, 0); 
+        _particleSystem.transform.localPosition = new Vector3(0, -0.5f, 0);
     }
 
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(rb.position + new Vector2(0.5f,0), rb.position + new Vector2(0.5f,0) + Vector2.down * 0.55f);
-        Gizmos.DrawLine(rb.position - new Vector2(0.47f,0), rb.position - new Vector2(0.47f,0) + Vector2.down * 0.55f);
+        Gizmos.DrawLine(rb.position + new Vector2(0.5f, 0), rb.position + new Vector2(0.5f, 0) + Vector2.down * 0.55f);
+        Gizmos.DrawLine(rb.position - new Vector2(0.47f, 0), rb.position - new Vector2(0.47f, 0) + Vector2.down * 0.55f);
     }
 }
