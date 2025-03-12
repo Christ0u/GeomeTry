@@ -189,9 +189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalType: 0
-  cubePrefab: {fileID: 6701244392378555361, guid: b5f171db314334d029e9678779ad7369, type: 3}
+  cubePrefab: {fileID: 6701244392378555361, guid: f69f8052b45014d4abdd3b51093b1a7c, type: 3}
   shipPrefab: {fileID: 6701244392378555361, guid: b5f171db314334d029e9678779ad7369, type: 3}
-  wavePrefab: {fileID: 0}
+  wavePrefab: {fileID: 6701244392378555361, guid: d0a23a8484282534f8f5832bd48e0591, type: 3}
 --- !u!61 &6513110165115344672
 BoxCollider2D:
   m_ObjectHideFlags: 0
