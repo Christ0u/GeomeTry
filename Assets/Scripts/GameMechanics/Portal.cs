@@ -14,14 +14,24 @@ public class CharacterPortal : MonoBehaviour
     [SerializeField] private GameObject shipPrefab;
     [SerializeField] private GameObject wavePrefab;
 
+    private bool isOnCooldown = false;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Character character = collision.GetComponent<Character>();
         
-        if (character != null) // safety check, probablement inutile
+        if (character != null && !isOnCooldown ) // character != null safety check, probablement inutile
         {
+            isOnCooldown = true;
             TransformPlayer(character);
+
+            Invoke("ResetCooldown", 0.5f); 
         }
+    }
+
+    private void ResetCooldown()
+    {
+        isOnCooldown = false;
     }
 
     private void TransformPlayer(Character character)
