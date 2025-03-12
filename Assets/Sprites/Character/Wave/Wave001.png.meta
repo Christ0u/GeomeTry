@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 71a4dbbb3b0b6498598d95ed8882d791
+guid: 9b77b1f26de1c21488e490595af618a5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3502088888228913019
-    second: Ship (Back)_0
+      213: -4003080619333255415
+    second: Wave001_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ship (Back)_0
+      name: Wave001_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 100
-        height: 308
+        width: 82
+        height: 102
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 580e54506b4166fc0800000000000000
-      internalID: -3502088888228913019
+      spriteID: 90ff36dc2633278c0800000000000000
+      internalID: -4003080619333255415
       vertices: []
       indices: 
       edges: []
@@ -147,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Ship (Back)_0: -3502088888228913019
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
