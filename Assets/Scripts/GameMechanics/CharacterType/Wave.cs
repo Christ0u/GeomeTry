@@ -34,7 +34,6 @@ public class Wave : Character
     {
         if (keyPressed)
         {
-            Debug.Log("Switching direction");
             _modifier = 1;
         } else {
             _modifier = -1;

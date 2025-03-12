@@ -19,20 +19,17 @@ public abstract class Character : MonoBehaviour
     [SerializeField] protected ParticleSystem _particleSystem;
 
     protected Vector3 startPosition;
-    protected Transform _particleSystemParent;
 
     protected bool keyPressed = false;
 
     protected virtual void Start()
     {
-        Time.timeScale = 1.3f; // Game speed
+        Time.timeScale = 1.5f; // Game speed
         _isGrounded = true; 
         _gameManager = GameManager.Instance;
         startPosition = transform.position;
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-
-        _particleSystemParent = new GameObject("ParticleSystemParent").transform;
     }
     
     protected virtual void FixedUpdate()
@@ -90,14 +87,12 @@ public abstract class Character : MonoBehaviour
 
     protected void DettachParticleSystem()
     {
-        _particleSystem.Stop();
-        _particleSystem.transform.SetParent(_particleSystemParent, true);
+        _particleSystem.Stop(true);
     }
 
     protected void ReattachParticleSystem()
     {
         _particleSystem.Play();
-        _particleSystem.transform.SetParent(transform, true);
         _particleSystem.transform.localPosition = new Vector3(0, -0.5f, 0); 
     }
 
