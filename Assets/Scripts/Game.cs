@@ -79,7 +79,7 @@ public class Game : MonoBehaviour
 
         #region Génération du sol
 
-        int offset = 20;
+        int offset = 25;
 
         // Position initiale du personnage
         int characterOrigin = (int)Character.transform.position.x;
