@@ -473,6 +473,7 @@ GameObject:
   - component: {fileID: 1152274315}
   - component: {fileID: 1152274314}
   - component: {fileID: 1152274316}
+  - component: {fileID: 1152274317}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -519,6 +520,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a498b7eeea9e241a2b021d62bb567b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1152274317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152274313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec42db2907f40a097a00b9d487a379f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundPrefab: {fileID: 9043505793469851450, guid: c0b8b4a663683854a80eea7f2031970a, type: 3}
 --- !u!1 &1256536965
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +678,6 @@ GameObject:
   - component: {fileID: 1400676208}
   - component: {fileID: 1400676207}
   - component: {fileID: 1400676212}
-  - component: {fileID: 1400676211}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -757,36 +770,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1400676211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1400676206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1400676212
 CanvasRenderer:
   m_ObjectHideFlags: 0
