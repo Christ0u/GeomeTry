@@ -612,7 +612,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1280889635}
   - component: {fileID: 1280889636}
-  - component: {fileID: 1280889637}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -655,21 +654,6 @@ MonoBehaviour:
   CubePortal: {fileID: 7772492711769105817, guid: 4597a458b68c34b1bb2c702b75280c5c, type: 3}
   WavePortal: {fileID: 7772492711769105817, guid: bd108810da8e3c44eb8fb44d66318955, type: 3}
   tilemap: {fileID: 1237142356}
---- !u!114 &1280889637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1280889634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63fb9c72769dd4a3c9e1b830030805a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 6701244392378555361, guid: f69f8052b45014d4abdd3b51093b1a7c, type: 3}
-  shipPrefab: {fileID: 6701244392378555361, guid: b5f171db314334d029e9678779ad7369, type: 3}
-  wavePrefab: {fileID: 6701244392378555361, guid: f69f8052b45014d4abdd3b51093b1a7c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
