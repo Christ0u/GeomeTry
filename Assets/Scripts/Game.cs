@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 using System.IO;
 using System.Collections.Generic;
 
+
 public class Game : MonoBehaviour
 {
     public GameObject Character;
@@ -17,8 +18,22 @@ public class Game : MonoBehaviour
     public GameObject WavePortal;
     public Tilemap tilemap;
 
+    private Dictionary<string, GameObject> prefabDictionary;
+
     void Start()
     {
+        // Initialisation du dictionnaire de prefabs
+        prefabDictionary = new Dictionary<string, GameObject>
+        {
+            { "tile", Tile },
+            { "smallTile", SmallTile },
+            { "spike", Spike },
+            { "smallSpike", SmallSpike },
+            { "shipPortal", ShipPortal },
+            { "cubePortal", CubePortal },
+            { "wavePortal", WavePortal }
+        };
+
         #region Génération de le map
         // Chargement du fichier JSON
         TextAsset jsonFile = Resources.Load<TextAsset>("maps/map");
@@ -56,37 +71,11 @@ public class Game : MonoBehaviour
                 // Rotation nulle par défaut
                 rotation = Quaternion.identity;
             }
-
-            switch ($"{item["type"].stringValue}")
+            
+            // Instanciation de l'objet en utilisant le dictionnaire
+            if (prefabDictionary.TryGetValue(item["type"].stringValue, out GameObject prefab))
             {
-                case "tile":
-                    // Instanciation d'un Tile dans la tilemap
-                    Instantiate(Tile, position, rotation, tilemap.transform);
-                    break;
-                case "smallTile":
-                    // Instanciation d'un SmallTile dans la tilemap
-                    Instantiate(SmallTile, position, rotation, tilemap.transform);
-                    break;
-                case "spike":
-                    // Instanciation d'un Spike dans la tilemap
-                    Instantiate(Spike, position, rotation, tilemap.transform);
-                    break;
-                case "smallSpike":
-                    // Instanciation d'un SmallSpike dans la tilemap
-                    Instantiate(SmallSpike, position, rotation, tilemap.transform);
-                    break;
-                case "shipPortal":
-                    // Instanciation d'un shipPortal dans la tilemap
-                    Instantiate(ShipPortal, position, rotation, tilemap.transform);
-                    break;
-                case "cubePortal":
-                    // Instanciation d'un cubePortal dans la tilemap
-                    Instantiate(CubePortal, position, rotation, tilemap.transform);
-                    break;
-                case "wavePortal":
-                    // Instanciation d'un wavePortal dans la tilemap
-                    Instantiate(WavePortal, position, rotation, tilemap.transform);
-                    break;
+                Instantiate(prefab, position, rotation, tilemap.transform);
             }
         }
 
