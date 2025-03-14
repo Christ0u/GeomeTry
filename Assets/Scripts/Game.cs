@@ -45,8 +45,17 @@ public class Game : MonoBehaviour
             // Ajustement de la position pour que l'objet soit centré sur une case de la tilemap
             position += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
 
-            // Application de la rotation
-            Quaternion rotation = Quaternion.Euler(0, 0, item["rotation"].intValue);
+            // Rotation de l'objet
+            Quaternion rotation;
+            if (item["rotation"] != null)
+            {
+                rotation = Quaternion.Euler(0, 0, item["rotation"].intValue);
+            }
+            else
+            {
+                // Rotation nulle par défaut
+                rotation = Quaternion.identity;
+            }
 
             switch ($"{item["type"].stringValue}")
             {
