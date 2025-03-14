@@ -45,35 +45,38 @@ public class Game : MonoBehaviour
             // Ajustement de la position pour que l'objet soit centré sur une case de la tilemap
             position += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
 
+            // Application de la rotation
+            Quaternion rotation = Quaternion.Euler(0, 0, item["rotation"].intValue);
+
             switch ($"{item["type"].stringValue}")
             {
                 case "tile":
-                    // Instanciation d'un Tile dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(Tile, position, Quaternion.identity, tilemap.transform);
+                    // Instanciation d'un Tile dans la tilemap
+                    Instantiate(Tile, position, rotation, tilemap.transform);
                     break;
                 case "smallTile":
-                    // Instanciation d'un SmallTile dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(SmallTile, position, Quaternion.identity, tilemap.transform);
+                    // Instanciation d'un SmallTile dans la tilemap
+                    Instantiate(SmallTile, position, rotation, tilemap.transform);
                     break;
                 case "spike":
-                    // Instanciation d'un Spike dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(Spike, position, Quaternion.identity, tilemap.transform);
+                    // Instanciation d'un Spike dans la tilemap
+                    Instantiate(Spike, position, rotation, tilemap.transform);
                     break;
                 case "smallSpike":
-                    // Instanciation d'un SmallSpike dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(SmallSpike, position, Quaternion.identity, tilemap.transform);
+                    // Instanciation d'un SmallSpike dans la tilemap
+                    Instantiate(SmallSpike, position, rotation, tilemap.transform);
                     break;
                 case "shipPortal":
-                    // Instanciation d'un shipPortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(ShipPortal, position, Quaternion.identity, tilemap.transform);
+                    // Instanciation d'un shipPortal dans la tilemap
+                    Instantiate(ShipPortal, position, rotation, tilemap.transform);
                     break;
                 case "cubePortal":
-                    // Instanciation d'un cubePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(CubePortal, position, Quaternion.identity, tilemap.transform);
+                    // Instanciation d'un cubePortal dans la tilemap
+                    Instantiate(CubePortal, position, rotation, tilemap.transform);
                     break;
                 case "wavePortal":
-                    // Instanciation d'un wavePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(WavePortal, position, Quaternion.identity, tilemap.transform);
+                    // Instanciation d'un wavePortal dans la tilemap
+                    Instantiate(WavePortal, position, rotation, tilemap.transform);
                     break;
             }
         }
@@ -81,6 +84,7 @@ public class Game : MonoBehaviour
         #endregion
 
         #region Génération du personnage et de la caméra
+
         // Instanciation du personnage et de la caméra
         Instantiate(Character, tilemap.GetCellCenterWorld(new Vector3Int(-10, 1, 0)) + new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0), Quaternion.identity, tilemap.transform);
 
