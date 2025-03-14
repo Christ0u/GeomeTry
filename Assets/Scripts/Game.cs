@@ -1,11 +1,16 @@
 using UnityEngine;
 using Defective.JSON; // Dépendance externe : https://assetstore.unity.com/packages/tools/input-management/json-object-710#description
 using UnityEngine.Tilemaps;
+using System.IO;
+using System.Collections.Generic;
+
 public class Game : MonoBehaviour
 {
-    public GameObject Spike;
-    public GameObject Tile;
     public GameObject Character;
+    public GameObject Tile;
+    public GameObject SmallTile;
+    public GameObject Spike;
+    public GameObject SmallSpike;
     public GameObject Ground;
     public GameObject ShipPortal;
     public GameObject CubePortal;
@@ -42,13 +47,21 @@ public class Game : MonoBehaviour
 
             switch ($"{item["type"].stringValue}")
             {
+                case "tile":
+                    // Instanciation d'un Tile dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
+                    Instantiate(Tile, position, Quaternion.identity, tilemap.transform);
+                    break;
+                case "smallTile":
+                    // Instanciation d'un SmallTile dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
+                    Instantiate(SmallTile, position, Quaternion.identity, tilemap.transform);
+                    break;
                 case "spike":
                     // Instanciation d'un Spike dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
                     Instantiate(Spike, position, Quaternion.identity, tilemap.transform);
                     break;
-                case "block":
-                    // Instanciation d'un Spike dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(Tile, position, Quaternion.identity, tilemap.transform);
+                case "smallSpike":
+                    // Instanciation d'un SmallSpike dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
+                    Instantiate(SmallSpike, position, Quaternion.identity, tilemap.transform);
                     break;
                 case "shipPortal":
                     // Instanciation d'un shipPortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
@@ -63,7 +76,6 @@ public class Game : MonoBehaviour
                     Instantiate(WavePortal, position, Quaternion.identity, tilemap.transform);
                     break;
             }
-
         }
 
         #endregion
