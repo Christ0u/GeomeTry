@@ -5,19 +5,32 @@ using UnityEngine.UI;
 public class ProgressBar : MonoBehaviour
 {
     public Image mask;
+    public TextMeshProUGUI textMesh;
     private Transform player;
     private float startPosition;
-    private float endPosition = 300f;
+    private float endPosition;
     private float currentFillAmount;
-    public TextMeshProUGUI textMesh;
 
     void Start()
     {
+        // Initialisation de la position de départ
         startPosition = Character.InitialPosition;
     }
 
     void Update()
     {
+        // Vérifier si l'objet de fin est trouvé
+        if (endPosition == 0)
+        {
+            FindEndObject();
+            if (endPosition == 0)
+            {
+                Debug.LogError("Impossible de trouver l'objet de fin");
+                return;
+            }
+        }
+
+        // Vérifier si le joueur est trouvé
         if (player == null)
         {
             FindPlayer();
@@ -30,10 +43,21 @@ public class ProgressBar : MonoBehaviour
 
     void FindPlayer()
     {
+        // Trouver le joueur par son tag
         GameObject playerObject = GameObject.FindWithTag("Player");
         if (playerObject != null)
         {
             player = playerObject.transform;
+        }
+    }
+
+    void FindEndObject()
+    {
+        // Trouver l'objet de fin par son tag
+        GameObject endObject = GameObject.FindWithTag("EndOfMap");
+        if (endObject != null)
+        {
+            endPosition = endObject.transform.position.x;
         }
     }
 

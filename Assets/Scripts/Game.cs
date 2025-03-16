@@ -19,6 +19,7 @@ public class Game : MonoBehaviour
     public Tilemap tilemap;
 
     private Dictionary<string, GameObject> prefabDictionary;
+    private int lastObjectX = int.MinValue;
 
     void Start()
     {
@@ -43,8 +44,6 @@ public class Game : MonoBehaviour
 
         // Parsing du fichier JSON
         JSONObject map = new JSONObject(rawMap);
-
-        int lastObjectX = 0;
 
         //Construction de la map
         foreach (JSONObject item in map["map"])
@@ -71,13 +70,18 @@ public class Game : MonoBehaviour
                 // Rotation nulle par défaut
                 rotation = Quaternion.identity;
             }
-            
+
             // Instanciation de l'objet en utilisant le dictionnaire
             if (prefabDictionary.TryGetValue(item["type"].stringValue, out GameObject prefab))
             {
                 Instantiate(prefab, position, rotation, tilemap.transform);
             }
         }
+
+        // Création d'un objet matérialisant la fin de la map
+        GameObject obj = new GameObject("EndOfMap");
+        obj.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(lastObjectX + 1, 0, 0));
+        obj.gameObject.tag = "EndOfMap";
 
         #endregion
 
