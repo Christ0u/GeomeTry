@@ -10,6 +10,7 @@ public abstract class Character : MonoBehaviour
     protected float jumpForce = 13.5f;
     protected float rotationSpeed = 280.0f;
     protected bool _isGrounded;
+    public const float InitialPosition = -9.5f;
 
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected LayerMask groundLayer;
