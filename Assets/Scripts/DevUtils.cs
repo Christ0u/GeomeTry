@@ -1,7 +1,40 @@
+using System;
+using System.IO;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DevUtils : MonoBehaviour
 {
+    public int backgroundQuantity;
+
+    private void Awake()
+    {
+        CountBackgroundFiles();
+    }
+
+    #region Count data
+    void CountBackgroundFiles()
+    {
+        string folderPath = "Assets/Resources/UI/Backgrounds";
+        
+        if (Directory.Exists(folderPath))
+        {
+            // Filtre les fichiers pour exclure les fichiers .meta
+            string[] files = Directory.GetFiles(folderPath)
+                .Where(file => !file.EndsWith(".meta")) 
+                .ToArray();
+            
+            backgroundQuantity = files.Length;
+        }
+        else
+        {
+            Debug.LogWarning($"Le dossier {folderPath} n'existe pas.");
+        }
+    }
+    #endregion
+    
+    #region Generate random data
     public int GenerateRandomInt(int min, int max)
     {
         return Random.Range(min, max + 1);  // max + 1 pour inclure la valeur max
@@ -15,4 +48,5 @@ public class DevUtils : MonoBehaviour
 
         return new Color(red, green, blue);
     }
+    #endregion
 }
