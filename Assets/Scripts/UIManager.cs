@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,19 +15,15 @@ public class UIManager : MonoBehaviour
 
     public void OnClickSwitchSceneButton(string sceneName)
     {
+        Debug.Log("Chargement de la scène " + sceneName);
         StartCoroutine(_gameManager.LoadScene(sceneName));
+        Debug.Log("Fin chargement de la scène " + sceneName);
     }
     
-    // A modifier plus tard
     public void OnClickLevelButton()
     {
         StartCoroutine(_gameManager.LoadScene("Level"));
-        _gameManager.PlayMode = true;
-        
-        // TODO
-        // Audio
-        // AudioSource audio;
-        // audio = GetComponent<AudioSource>();
-        // audio.Play();
+        // LaunchLevel(Level);
+        _gameManager.PlayMode = true; // -> A déplacer dans le Launch
     }
 }

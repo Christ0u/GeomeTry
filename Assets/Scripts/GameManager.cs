@@ -22,11 +22,19 @@ public class GameManager : MonoBehaviour
     
     public IEnumerator LoadScene(string sceneName)
     {
-        if (!SceneExists(sceneName)) { yield break; }
+        if (!SceneExists(sceneName))
+        {
+            Debug.Log("La scène " + sceneName + " n'existe pas ou n'est pas ajouté dans le Build"); 
+            yield break;
+        }
 
         AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(sceneName);
 
-        if (loadSceneAsync == null) { yield break; }
+        if (loadSceneAsync == null)
+        {
+            Debug.Log("loadSceneAsync vaut null!");
+            yield break;
+        }
 
         yield return new WaitUntil(() => loadSceneAsync.isDone);
     }

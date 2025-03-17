@@ -1,9 +1,7 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelEditorManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     private DevUtils _devUtils;
 
@@ -15,8 +13,7 @@ public class LevelEditorManager : MonoBehaviour
         _devUtils = GetComponent<DevUtils>();
         SetLevel();
     }
-
-    #region CreateMapComponents
+    
     private void SetLevel()
     {
         // Recherche du Canvas dans la scène
@@ -38,9 +35,7 @@ public class LevelEditorManager : MonoBehaviour
             Debug.LogError("Erreur de configuration : le prefab de fond n'est pas défini.");
         }
     }
-    #endregion
-
-    // Gestion des fonds
+    
     #region Manage Background
 
     /// <summary>
