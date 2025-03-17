@@ -1142,15 +1142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 6701244392378555361, guid: f69f8052b45014d4abdd3b51093b1a7c, type: 3}
-  Tile: {fileID: 6507612037602497914, guid: 91a6c676e52768548b7cd6fa2d74db81, type: 3}
-  SmallTile: {fileID: 6507612037602497914, guid: b4984fe6292dcf84fa9074e381da6337, type: 3}
-  Spike: {fileID: 8859494495541233455, guid: 7e1d978e6d6a2474ca548511716c5a33, type: 3}
-  SmallSpike: {fileID: 8859494495541233455, guid: 3c4947973b26245a194d4d0dd9f3b386, type: 3}
   Ground: {fileID: 8359773978881231276, guid: 952d0ad4e02e5d04e8d9f86c9c30c667, type: 3}
-  ShipPortal: {fileID: 7772492711769105817, guid: 8502b71038cb9407fa32fb7e834e1604, type: 3}
-  CubePortal: {fileID: 7772492711769105817, guid: 4597a458b68c34b1bb2c702b75280c5c, type: 3}
-  WavePortal: {fileID: 7772492711769105817, guid: bd108810da8e3c44eb8fb44d66318955, type: 3}
-  tilemap: {fileID: 1237142356}
+  Tilemap: {fileID: 1237142356}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
