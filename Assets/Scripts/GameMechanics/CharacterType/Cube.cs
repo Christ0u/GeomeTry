@@ -27,7 +27,7 @@ public class Cube : Character
 
     private void Jump()
     {
-        if (CheckGrounded())
+        if (CheckGrounded() && !isDead)
         {
             DettachParticleSystem();
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
