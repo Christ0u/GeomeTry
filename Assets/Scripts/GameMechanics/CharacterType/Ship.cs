@@ -29,7 +29,7 @@ public class Ship : Character
 
     protected override void HandleMovement()
     {
-        if (isFlying && !isDead)
+        if (isFlying)
         {
             // on gère les particules ici j'ai pas reussi a faire mieux ... pas optimal car dans HandleMovement...
             rb.AddForce(Vector2.up * flyForce, ForceMode2D.Force);
