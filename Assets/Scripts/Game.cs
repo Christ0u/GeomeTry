@@ -46,7 +46,7 @@ public class Game : MonoBehaviour
             }
 
             // Instanciation de l'objet en utilisant le dictionnaire
-            if (Utils.Prefabs.TryGetValue(mapItem.Type, out GameObject prefab))
+            if (Prefab.Prefabs.TryGetValue(mapItem.Type, out GameObject prefab))
             {
                 Instantiate(prefab, position, rotation, Tilemap.transform);
             }
