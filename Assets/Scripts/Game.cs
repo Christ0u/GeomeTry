@@ -13,7 +13,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("maps/map");
+        TextAsset jsonFile = Resources.Load<TextAsset>("maps/test");
         _level = new Level(jsonFile);
 
         LaunchLevel(_level);
@@ -54,8 +54,20 @@ public class Game : MonoBehaviour
 
         // Création d'un objet matérialisant la fin de la map
         GameObject obj = new GameObject("EndOfMap");
-        obj.transform.position = Tilemap.GetCellCenterWorld(new Vector3Int(level.getLastMapItem().X + 1, 0, 0));
+
+        Vector3 endPosition = Tilemap.GetCellCenterWorld(new Vector3Int(level.getLastMapItem().X + 1, 0, 0));
+        endPosition += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
+        obj.transform.position = endPosition;
+
         obj.gameObject.tag = "EndOfMap";
+
+        // Instanciation du mur de fin
+        Vector3 endWallPosition = Tilemap.GetCellCenterWorld(new Vector3Int(level.getLastMapItem().X + 15, 0, 0));
+        endWallPosition += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
+        if (Prefab.Prefabs.TryGetValue("endWall", out GameObject endWallPrefab))
+        {
+            Instantiate(endWallPrefab, endWallPosition, Quaternion.identity, Tilemap.transform);
+        }
 
         #endregion
 

@@ -10,6 +10,7 @@ public static class Prefab
     private static GameObject ShipPortal = Resources.Load<GameObject>("Prefabs/Portals/ShipPortal");
     private static GameObject CubePortal = Resources.Load<GameObject>("Prefabs/Portals/CubePortal");
     private static GameObject WavePortal = Resources.Load<GameObject>("Prefabs/Portals/WavePortal");
+    private static GameObject EndWall = Resources.Load<GameObject>("Prefabs/Decors/EndWall");
     public static Dictionary<string, GameObject> Prefabs { get; private set; }
 
     static Prefab()
@@ -22,7 +23,8 @@ public static class Prefab
             { "smallSpike", SmallSpike },
             { "shipPortal", ShipPortal },
             { "cubePortal", CubePortal },
-            { "wavePortal", WavePortal }
+            { "wavePortal", WavePortal },
+            { "endWall",    EndWall }
         };
     }
 }

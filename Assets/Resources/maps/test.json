@@ -1,7 +1,7 @@
 {
-    "version": "1.0.0",
-    "name": "Stereo Madness",
     "id": 1,
+    "name": "Stereo Madness",
+    "difficulty": 1,
     "map": [
         {
             "type": "spike",
