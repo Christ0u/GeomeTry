@@ -15,7 +15,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test");
+        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/map");
         _level = new Level(jsonFile);
 
         LaunchLevel(_level);
@@ -94,10 +94,10 @@ public class Game : MonoBehaviour
 
         // Définition de la taille du sol
         int groundSize = groundEnd - groundOrigin;
-        Vector3 groundScale = Tilemap.GetCellCenterWorld(new Vector3Int(groundSize, 1, 0));
+        Vector3 groundScale = Tilemap.GetCellCenterWorld(new Vector3Int(groundSize, 3, 0));
 
         // Définitioin de la position du sol
-        Vector3 groundPosition = Tilemap.GetCellCenterWorld(new Vector3Int((groundEnd + groundOrigin) / 2, -1, 0));
+        Vector3 groundPosition = Tilemap.GetCellCenterWorld(new Vector3Int((groundEnd + groundOrigin) / 2, -2, 0));
         groundPosition += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
 
         // Instanciation du sol
