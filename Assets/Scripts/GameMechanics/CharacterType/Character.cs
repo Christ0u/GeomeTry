@@ -18,6 +18,7 @@ public abstract class Character : MonoBehaviour
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected ParticleSystem _particleSystem;
     [SerializeField] protected Animator animator;
+    [SerializeField] protected AudioSource deathSfx;
 
     protected Vector3 startPosition;
     protected bool keyPressed = false;
@@ -81,6 +82,8 @@ public abstract class Character : MonoBehaviour
     public virtual void Die()
     {
         IsAlive = false;
+
+        deathSfx.Play();
 
         currentSpeed = 0.0f;
         rb.linearVelocity = Vector2.zero;
