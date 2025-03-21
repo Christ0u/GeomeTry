@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,10 +11,11 @@ public class Game : MonoBehaviour
     // Propriétés
     private GameMode _gameMode;
     private Level _level;
+    AudioSource audioSource;
 
     void Start()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("maps/test");
+        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test");
         _level = new Level(jsonFile);
 
         LaunchLevel(_level);
@@ -102,5 +104,42 @@ public class Game : MonoBehaviour
         GameObject groundInstance = Instantiate(Ground, groundPosition, Quaternion.identity, Tilemap.transform);
         groundInstance.transform.localScale = groundScale;
         #endregion
+
+        #region Musique
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = level.Music;
+
+        #endregion
+    }
+
+    void Update()
+    {
+        // Gestion de la musique
+        GameObject character = GameObject.FindGameObjectWithTag("Player");
+        if (character == null)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+        else
+        {
+            if (character.gameObject.GetComponent<Character>().IsAlive)
+            {
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+            }
+            else
+            {
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+            }
+        }
     }
 }

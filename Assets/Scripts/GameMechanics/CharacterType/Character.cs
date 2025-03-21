@@ -11,6 +11,7 @@ public abstract class Character : MonoBehaviour
     protected float rotationSpeed = 280.0f;
     protected bool _isGrounded;
     public const float InitialPosition = -9.5f;
+    public bool IsAlive;
 
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected LayerMask groundLayer;
@@ -23,6 +24,8 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Start()
     {
+        IsAlive = true;
+
         Time.timeScale = 1.5f; // Game speed
         _isGrounded = true;
         _gameManager = GameManager.Instance;
@@ -77,6 +80,8 @@ public abstract class Character : MonoBehaviour
 
     public virtual void Die()
     {
+        IsAlive = false;
+
         currentSpeed = 0.0f;
         rb.linearVelocity = Vector2.zero;
 
@@ -93,6 +98,8 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Respawn()
     {
+        IsAlive = true;
+        
         transform.position = startPosition;
         currentSpeed = DefaultSpeed;
         rb.linearVelocity = Vector2.zero;

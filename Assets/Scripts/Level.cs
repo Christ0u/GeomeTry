@@ -9,6 +9,7 @@ public class Level
     public string Name { get; private set; }
     public int Difficulty { get; private set; }
     public List<MapItem> Map { get; private set; }
+    public AudioClip Music { get; private set; }
     private MapItem _lastMapItem;
 
     // Constructeur
@@ -43,6 +44,10 @@ public class Level
                 _lastMapItem = mapItem;
             }
         }
+
+        // Chargement de la musique
+        Music = Resources.Load<AudioClip>("Songs/Musics/" + jsonData["music"].stringValue);
+        Debug.Log("Chargement de la musique " + Music.name);
     }
 
     public MapItem getLastMapItem()
