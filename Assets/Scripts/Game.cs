@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class Game : MonoBehaviour
 {
-    public GameObject Character;
+    public GameObject CharacterInstance;
     public GameObject Ground;
     public Tilemap Tilemap;
 
@@ -15,7 +15,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/map");
+        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test");
         _level = new Level(jsonFile);
 
         LaunchLevel(_level);
@@ -64,7 +64,7 @@ public class Game : MonoBehaviour
         obj.gameObject.tag = "EndOfMap";
 
         // Instanciation du mur de fin
-        Vector3 endWallPosition = Tilemap.GetCellCenterWorld(new Vector3Int(level.getLastMapItem().X + 15, 0, 0));
+        Vector3 endWallPosition = Tilemap.GetCellCenterWorld(new Vector3Int(level.getLastMapItem().X + 16, 0, 0));
         endWallPosition += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
         if (Prefab.Prefabs.TryGetValue("endWall", out GameObject endWallPrefab))
         {
@@ -76,7 +76,8 @@ public class Game : MonoBehaviour
         #region Génération du personnage et de la caméra
 
         // Instanciation du personnage et de la caméra
-        Instantiate(Character, Tilemap.GetCellCenterWorld(new Vector3Int(-10, 1, 0)) + new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0), Quaternion.identity, Tilemap.transform);
+        CharacterInstance = Resources.Load<GameObject>("Prefabs/Player/CubePrefab");
+        Instantiate(CharacterInstance, Tilemap.GetCellCenterWorld(new Vector3Int(-10, 1, 0)) + new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0), Quaternion.identity, Tilemap.transform);
         Camera cameraInstance = FindFirstObjectByType<Camera>();
         cameraInstance.player = GameObject.Find("CubePrefab(Clone)").transform;
 
@@ -86,7 +87,7 @@ public class Game : MonoBehaviour
         int offset = 25;
 
         // Position initiale du personnage
-        int characterOrigin = (int)Character.transform.position.x;
+        int characterOrigin = (int)CharacterInstance.transform.position.x;
 
         // Définition des coordonnées du sol
         int groundOrigin = characterOrigin - offset;
@@ -126,7 +127,9 @@ public class Game : MonoBehaviour
         }
         else
         {
-            if (character.gameObject.GetComponent<Character>().IsAlive)
+            float initialPosition = Character.InitialPosition;
+            // Si le personnage est en vie et qu'il a dépassé sa position initiale, on joue la musique
+            if (character.gameObject.GetComponent<Character>().isAlive && character.transform.position.x >= initialPosition)
             {
                 if (!audioSource.isPlaying)
                 {

@@ -1142,7 +1142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6800c2a53c9c24a4e9d9c7f79510bca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Character: {fileID: 6701244392378555361, guid: f69f8052b45014d4abdd3b51093b1a7c, type: 3}
+  CharacterInstance: {fileID: 0}
   Ground: {fileID: 8359773978881231276, guid: 952d0ad4e02e5d04e8d9f86c9c30c667, type: 3}
   Tilemap: {fileID: 1237142356}
 --- !u!82 &1280889637
@@ -1157,7 +1157,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

@@ -10,8 +10,8 @@ public abstract class Character : MonoBehaviour
     protected float jumpForce = 13.5f;
     protected float rotationSpeed = 280.0f;
     protected bool _isGrounded;
-    public const float InitialPosition = -9.5f;
-    public bool IsAlive;
+    public const float InitialPosition = -5f;
+    public bool isAlive;
 
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected LayerMask groundLayer;
@@ -20,17 +20,17 @@ public abstract class Character : MonoBehaviour
     [SerializeField] protected Animator animator;
     [SerializeField] protected AudioSource deathSfx;
 
-    protected Vector3 startPosition;
+    protected Vector3 respawnPosition;
     protected bool keyPressed = false;
 
     protected virtual void Start()
     {
-        IsAlive = true;
+        isAlive = true;
 
         Time.timeScale = 1.5f; // Game speed
         _isGrounded = true;
         _gameManager = GameManager.Instance;
-        startPosition = transform.position;
+        respawnPosition = new Vector3(InitialPosition, 0, 0);
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
@@ -81,7 +81,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual void Die()
     {
-        IsAlive = false;
+        isAlive = false;
 
         deathSfx.Play();
 
@@ -101,9 +101,9 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Respawn()
     {
-        IsAlive = true;
-        
-        transform.position = startPosition;
+        isAlive = true;
+
+        transform.position = respawnPosition;
         currentSpeed = DefaultSpeed;
         rb.linearVelocity = Vector2.zero;
 
