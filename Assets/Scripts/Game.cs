@@ -1,104 +1,148 @@
+using Unity.VisualScripting;
 using UnityEngine;
-using Defective.JSON; // Dépendance externe : https://assetstore.unity.com/packages/tools/input-management/json-object-710#description
 using UnityEngine.Tilemaps;
+
 public class Game : MonoBehaviour
 {
-    public GameObject Spike;
-    public GameObject Tile;
-    public GameObject Character;
+    public GameObject CharacterInstance;
     public GameObject Ground;
-    public GameObject ShipPortal;
-    public GameObject CubePortal;
-    public GameObject WavePortal;
-    public Tilemap tilemap;
+    public Tilemap Tilemap;
+
+    // Propriétés
+    private GameMode _gameMode;
+    private Level _level;
+    AudioSource audioSource;
 
     void Start()
     {
+        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test");
+        _level = new Level(jsonFile);
+
+        LaunchLevel(_level);
+    }
+
+    // Méthodes
+    void LaunchLevel(Level level)
+    {
+        Debug.Log("Lancement du niveau " + level.Name);
+
         #region Génération de le map
-        // Chargement du fichier JSON
-        TextAsset jsonFile = Resources.Load<TextAsset>("maps/map");
 
-        // Lecture du fichier
-        string rawMap = jsonFile.text;
-
-        // Parsing du fichier JSON
-        JSONObject map = new JSONObject(rawMap);
-
-        int lastObjectX = 0;
-
-        //Construction de la map
-        foreach (JSONObject item in map["map"])
+        foreach (MapItem mapItem in level.Map)
         {
-            // Récupération de l'abscisse du dernier objet a instancier
-            if (lastObjectX < item["x"].intValue)
+            Vector3 position = Tilemap.GetCellCenterWorld(new Vector3Int(mapItem.X, mapItem.Y, 0));
+
+            //Ajustement de la position pour que l'objet soit centré sur une case de la tilemap
+            position += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
+
+            // Rotation de l'objet
+            Quaternion rotation;
+            if (mapItem.Rotation != 0)
             {
-                lastObjectX = item["x"].intValue;
+                rotation = Quaternion.Euler(0, 0, mapItem.Rotation);
+            }
+            else
+            {
+                // Rotation nulle par défaut
+                rotation = Quaternion.identity;
             }
 
-            Vector3 position = tilemap.GetCellCenterWorld(new Vector3Int(item["x"].intValue, item["y"].intValue, 0));
-
-            // Ajustement de la position pour que l'objet soit centré sur une case de la tilemap
-            position += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
-
-            switch ($"{item["type"].stringValue}")
+            // Instanciation de l'objet en utilisant le dictionnaire
+            if (Prefab.Prefabs.TryGetValue(mapItem.Type, out GameObject prefab))
             {
-                case "spike":
-                    // Instanciation d'un Spike dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(Spike, position, Quaternion.identity, tilemap.transform);
-                    break;
-                case "block":
-                    // Instanciation d'un Spike dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(Tile, position, Quaternion.identity, tilemap.transform);
-                    break;
-                case "shipPortal":
-                    // Instanciation d'un shipPortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(ShipPortal, position, Quaternion.identity, tilemap.transform);
-                    break;
-                case "cubePortal":
-                    // Instanciation d'un cubePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(CubePortal, position, Quaternion.identity, tilemap.transform);
-                    break;
-                case "wavePortal":
-                    // Instanciation d'un wavePortal dans la tilemap (tilemap.transform) sans rotation (Quaternion.identity)
-                    Instantiate(WavePortal, position, Quaternion.identity, tilemap.transform);
-                    break;
+                Instantiate(prefab, position, rotation, Tilemap.transform);
             }
+        }
 
+        // Création d'un objet matérialisant la fin de la map
+        GameObject obj = new GameObject("EndOfMap");
+
+        Vector3 endPosition = Tilemap.GetCellCenterWorld(new Vector3Int(level.getLastMapItem().X + 1, 0, 0));
+        endPosition += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
+        obj.transform.position = endPosition;
+
+        obj.gameObject.tag = "EndOfMap";
+
+        // Instanciation du mur de fin
+        Vector3 endWallPosition = Tilemap.GetCellCenterWorld(new Vector3Int(level.getLastMapItem().X + 16, 0, 0));
+        endWallPosition += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
+        if (Prefab.Prefabs.TryGetValue("endWall", out GameObject endWallPrefab))
+        {
+            Instantiate(endWallPrefab, endWallPosition, Quaternion.identity, Tilemap.transform);
         }
 
         #endregion
 
         #region Génération du personnage et de la caméra
-        // Instanciation du personnage et de la caméra
-        Instantiate(Character, tilemap.GetCellCenterWorld(new Vector3Int(-10, 1, 0)) + new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0), Quaternion.identity, tilemap.transform);
 
+        // Instanciation du personnage et de la caméra
+        CharacterInstance = Resources.Load<GameObject>("Prefabs/Player/CubePrefab");
+        Instantiate(CharacterInstance, Tilemap.GetCellCenterWorld(new Vector3Int(-10, 1, 0)) + new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0), Quaternion.identity, Tilemap.transform);
         Camera cameraInstance = FindFirstObjectByType<Camera>();
         cameraInstance.player = GameObject.Find("CubePrefab(Clone)").transform;
 
         #endregion
 
         #region Génération du sol
-
         int offset = 25;
 
         // Position initiale du personnage
-        int characterOrigin = (int)Character.transform.position.x;
+        int characterOrigin = (int)CharacterInstance.transform.position.x;
 
         // Définition des coordonnées du sol
         int groundOrigin = characterOrigin - offset;
-        int groundEnd = lastObjectX + offset;
+        int groundEnd = level.getLastMapItem().X + offset;
 
         // Définition de la taille du sol
         int groundSize = groundEnd - groundOrigin;
-        Vector3 groundScale = tilemap.GetCellCenterWorld(new Vector3Int(groundSize, 1, 0));
+        Vector3 groundScale = Tilemap.GetCellCenterWorld(new Vector3Int(groundSize, 3, 0));
 
         // Définitioin de la position du sol
-        Vector3 groundPosition = tilemap.GetCellCenterWorld(new Vector3Int((groundEnd + groundOrigin) / 2, -1, 0)); groundPosition += new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
+        Vector3 groundPosition = Tilemap.GetCellCenterWorld(new Vector3Int((groundEnd + groundOrigin) / 2, -2, 0));
+        groundPosition += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
 
         // Instanciation du sol
-        GameObject groundInstance = Instantiate(Ground, groundPosition, Quaternion.identity, tilemap.transform);
+        GameObject groundInstance = Instantiate(Ground, groundPosition, Quaternion.identity, Tilemap.transform);
         groundInstance.transform.localScale = groundScale;
+        #endregion
+
+        #region Musique
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = level.Music;
 
         #endregion
+    }
+
+    void Update()
+    {
+        // Gestion de la musique
+        GameObject character = GameObject.FindGameObjectWithTag("Player");
+        if (character == null)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+        else
+        {
+            float initialPosition = Character.InitialPosition;
+            // Si le personnage est en vie et qu'il a dépassé sa position initiale, on joue la musique
+            if (character.gameObject.GetComponent<Character>().isAlive && character.transform.position.x >= initialPosition)
+            {
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+            }
+            else
+            {
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+            }
+        }
     }
 }

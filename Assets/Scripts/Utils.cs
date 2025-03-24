@@ -1,0 +1,5 @@
+enum GameMode
+{
+    Normal,
+    Practice
+}

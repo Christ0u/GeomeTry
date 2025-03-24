@@ -3,46 +3,64 @@ using UnityEngine.SceneManagement;
 
 public class Camera : MonoBehaviour
 {
-    private GameManager _gameManager; // A enlever plus tard
-    
     [SerializeField] public Transform player;
-    
-    private float _smoothSpeed = 0.05f;
-    private float _startFollowingXPosition = -5.0f; // La caméra commence à suivre le cube à partir de cette position en X
     public Vector3 offset;
+    private GameManager _gameManager; // A enlever plus tard
+    private float _smoothSpeed = 0.05f;
+    private float _startFollowingXPosition = -5f; // La caméra commence à suivre le cube à partir de cette position en X
+    private float _endFollowingXPosition; // La caméra arrête de suivre le cube à partir de cette position en X
     private bool _isFollowing = false;
-    
-    // A enlever plus tard
+    private bool _isEndObjectFound = false; // Indique si l'objet de fin a été trouvé
+
     private void Start()
     {
         _gameManager = GameManager.Instance;
-        
+
         if (SceneManager.GetActiveScene().name != "Main Menu" && !_gameManager.PlayMode)
         {
             SceneManager.LoadScene("Main Menu");
         }
     }
-    // -------------------
 
-    void FixedUpdate()
+    private void Update()
     {
-        if (!_isFollowing && player != null)
+        // Si l'objet de fin n'a pas encore été trouvé, on le recherche
+        if (!_isEndObjectFound)
         {
-            if (player.position.x >= _startFollowingXPosition)
+            GameObject endObject = GameObject.FindWithTag("EndOfMap");
+            if (endObject != null)
+            {
+                _endFollowingXPosition = endObject.transform.position.x;
+                _isEndObjectFound = true; // L'objet de fin a été trouvé
+                Debug.Log($"L'objet de fin a été trouvé avec succès : {_endFollowingXPosition}");
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (player != null)
+        {
+            if (player.position.x >= _startFollowingXPosition && player.position.x <= _endFollowingXPosition)
             {
                 _isFollowing = true;
             }
+            else
+            {
+                _isFollowing = false;
+            }
         }
 
-        if(_isFollowing && player != null)
+        if (_isFollowing && player != null)
         {
             var desiredPosition = player.position + new Vector3(5f, 0, -10f); // + offset
             var smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed);
 
-            if (smoothedPosition.y < 4f) {
+            if (smoothedPosition.y < 4f)
+            {
                 smoothedPosition.y = 4f;
             }
-            
+
             transform.position = smoothedPosition;
         }
     }

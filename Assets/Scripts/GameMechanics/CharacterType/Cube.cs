@@ -5,19 +5,22 @@ public class Cube : Character
     protected override void Update()
     {
         // Gestion du système de particule
-        if (!CheckGrounded()) {
+        if (!CheckGrounded())
+        {
             DettachParticleSystem();
-        } else {
+        }
+        else
+        {
             ReattachParticleSystem();
         }
 
         base.Update();
-
     }
 
     public override void onClick()
     {
-        if (keyPressed) {
+        if (keyPressed)
+        {
             Jump();
         }
     }
