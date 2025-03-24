@@ -38,6 +38,14 @@ public class UIManager : MonoBehaviour
         Application.Quit();
         #endif
     }
+
+    /// <summary>
+    /// Lance une vidéo YouTube.
+    /// </summary>
+    public void OnClickYouTubeButton()
+    {
+        Application.OpenURL("https://www.youtube.com/watch?v=SGbQ34Gm_UU"); // Oui c'est un rickroll.
+    }
     
     /// <summary>
     /// Permet de charger une scène.
