@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -14,7 +15,10 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        SetLevel();
+        if (SceneManager.GetActiveScene().name == "Level")
+        {
+            SetLevel();
+        }
     }
 
     private void SetLevel()

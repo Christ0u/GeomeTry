@@ -1,16 +1,28 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {   
     private GameManager _gameManager;
+    private DevUtils _devUtils;
     
     [SerializeField] private GameObject backgroundPrefab;
     private Image _backgroundImage;
+    private Canvas _canvas;
     
     private void Start()
     {
         _gameManager = GameManager.Instance;
+
+        _devUtils = GetComponent<DevUtils>();
+        _canvas = FindFirstObjectByType<Canvas>();
+
+        if(SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            SetBackground(_canvas, _devUtils.GenerateRandomInt(1,3), _devUtils.GenerateRandomColor());
+        }
+
     }
 
     #region Manage Buttons Actions
