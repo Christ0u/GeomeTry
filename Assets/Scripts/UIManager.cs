@@ -14,6 +14,23 @@ public class UIManager : MonoBehaviour
     }
 
     #region Manage Buttons Actions
+    
+    /// <summary>
+    /// Permet de quitter le jeu.
+    /// </summary>
+    public void OnClickQuitGame()
+    {
+        #if UNITY_EDITOR
+        Debug.Log("Appel à la fonction OnClickQuitGame - Ne marche que en build.");
+        #else
+        Application.Quit();
+        #endif
+    }
+    
+    /// <summary>
+    /// Permet de charger une scène.
+    /// </summary>
+    /// <param name="sceneName">Nom de la scène à charger.</param>
     public void OnClickSwitchSceneButton(string sceneName)
     {
         Debug.Log("Chargement de la scène " + sceneName);
@@ -21,6 +38,9 @@ public class UIManager : MonoBehaviour
         Debug.Log("Fin chargement de la scène " + sceneName);
     }
     
+    /// <summary>
+    /// Permet de lancer une partie.
+    /// </summary>
     public void OnClickLevelButton()
     {
         StartCoroutine(_gameManager.LoadScene("Level"));
