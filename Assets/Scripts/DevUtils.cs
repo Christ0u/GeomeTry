@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -6,11 +5,35 @@ using Random = UnityEngine.Random;
 
 public class DevUtils : MonoBehaviour
 {
+    public Color backgroundMenuColor;
+    public int backgroundIndex;
+
+    // FINALEMENT PAS UTILISER MAIS JE LAISSE ICI, L'IDEE PEUT ETRE INTERESSANTE
+
+    // // Liste des scènes pour lesquelles un fond spécifique doit être appliqué
+    // List<string> menuScenes = new List<string>
+    // {
+    //     "Main Menu",
+    //     "Customisation",
+    //     "Settings",
+    //     "Credits",
+    //     "Stats",
+    //     "Success",
+    //     "Profile",
+    //     "Level Selection",
+    //     "Level Editor"
+    // };
+
+    // Count
     public int backgroundQuantity;
 
     private void Awake()
     {
         CountBackgroundFiles();
+
+        // Modifier ici le fond de menu
+        backgroundMenuColor = GenerateRandomColor();
+        backgroundIndex = GenerateRandomInt(1, backgroundQuantity);
     }
 
     #region Count data

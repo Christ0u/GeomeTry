@@ -3,30 +3,43 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
-{   
+{
     private GameManager _gameManager;
     private DevUtils _devUtils;
-    
+
     [SerializeField] private GameObject backgroundPrefab;
     private Image _backgroundImage;
     private Canvas _canvas;
-    
-    private void Start()
+
+    private void Awake()
     {
         _gameManager = GameManager.Instance;
 
         _devUtils = GetComponent<DevUtils>();
         _canvas = FindFirstObjectByType<Canvas>();
 
-        if(SceneManager.GetActiveScene().name == "Main Menu")
-        {
-            SetBackground(_canvas, _devUtils.GenerateRandomInt(1,3), _devUtils.GenerateRandomColor());
-        }
+        // S'abonner à l'événement de changement de scène
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
+    private void Start()
+    {
+        ApplyMenuBackground();
+    }
+
+    private void OnDestroy()
+    {
+        // Se désabonner de l'événement pour éviter les erreurs
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ApplyMenuBackground();  // Réappliquer le fond après le chargement de la scène
     }
 
     #region Manage Buttons Actions
-    
+
     /// <summary>
     /// Permet de quitter le jeu.
     /// </summary>
@@ -46,7 +59,7 @@ public class UIManager : MonoBehaviour
     {
         Application.OpenURL("https://www.youtube.com/watch?v=SGbQ34Gm_UU"); // Oui c'est un rickroll.
     }
-    
+
     /// <summary>
     /// Permet de charger une scène.
     /// </summary>
@@ -57,7 +70,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(_gameManager.LoadScene(sceneName));
         Debug.Log("Fin chargement de la scène " + sceneName);
     }
-    
+
     /// <summary>
     /// Permet de lancer une partie.
     /// </summary>
@@ -70,6 +83,28 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Manage Backgrounds
+
+    /// <summary>
+    /// Applique le background sur le canvas de la scène.
+    /// </summary>
+    private void ApplyMenuBackground()
+    {
+        if (_canvas == null)
+        {
+            _canvas = FindFirstObjectByType<Canvas>();
+            if (_canvas == null)
+            {
+                Debug.LogError("Canvas introuvable dans la scène.");
+                return;
+            }
+        }
+
+        if (_canvas != null && _devUtils != null && !SceneManager.GetActiveScene().name.Equals("Level"))
+        {
+            Debug.Log("Application du fond...");
+            SetBackground(_canvas, _devUtils.backgroundIndex, _devUtils.backgroundMenuColor);
+        }
+    }
 
     /// <summary>
     /// Réccupère les données nécessaires pour le placement et la taille du fond.
@@ -122,7 +157,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Positionne le fond dans le panel.
     /// </summary>
-    private void SetBackgroundPosition(GameObject backgroundContainer,GameObject backgroundObject, int xIndex, int yIndex, float bgWidth, float bgHeight)
+    private void SetBackgroundPosition(GameObject backgroundContainer, GameObject backgroundObject, int xIndex, int yIndex, float bgWidth, float bgHeight)
     {
         RectTransform tileRect = backgroundObject.GetComponent<RectTransform>();
 
@@ -137,7 +172,7 @@ public class UIManager : MonoBehaviour
 
         tileRect.anchoredPosition = new Vector2(xPos, yPos);
         tileRect.sizeDelta = new Vector2(bgWidth, bgHeight);
-        
+
         backgroundObject.transform.SetParent(backgroundContainer.transform, false);
     }
 
@@ -153,7 +188,7 @@ public class UIManager : MonoBehaviour
             // Créer un conteneur pour contenir les tuiles du fond
             GameObject backgroundContainer = new GameObject("Background");
             RectTransform backgroundContainerRectTransform = backgroundContainer.AddComponent<RectTransform>();
-            
+
             backgroundContainer.transform.SetParent(canvas.transform, false);
             backgroundContainer.transform.SetSiblingIndex(0); // Le "0" signifie que l'objet sera placé au tout début de la hiérarchie
 
