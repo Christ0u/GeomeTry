@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f99b533912d86834d9afce7f6398bd16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 8112412867391987170, guid: 065844e7a5593ad4d88d3a4486492416, type: 3}
 --- !u!114 &2739037696171346070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,4 +85,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d50767a60d6cb244bcbe25b6a13b126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundMenuColor: {r: 0, g: 0, b: 0, a: 0}
+  backgroundIndex: 0
   backgroundQuantity: 0
