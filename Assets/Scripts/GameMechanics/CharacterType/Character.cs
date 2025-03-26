@@ -6,29 +6,33 @@ public abstract class Character : MonoBehaviour
     protected GameManager _gameManager;
     public float currentSpeed;
     protected const float DefaultSpeed = 6.5f;
+    protected const float DefaultGravityScale = 4.0f;
     protected float jumpForce = 13.5f;
     protected float rotationSpeed = 280.0f;
     protected bool _isGrounded;
+    public const float InitialPosition = -5f;
+    public bool isAlive;
 
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected ParticleSystem _particleSystem;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected AudioSource deathSfx;
 
-    protected Vector3 startPosition;
+    protected Vector3 respawnPosition;
     protected bool keyPressed = false;
-    Animator animator;
 
     protected virtual void Start()
     {
+        isAlive = true;
+
         Time.timeScale = 1.5f; // Game speed
         _isGrounded = true;
         _gameManager = GameManager.Instance;
-        startPosition = transform.position;
+        respawnPosition = new Vector3(InitialPosition, 0, 0);
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-
-        animator = GetComponent<Animator>();
     }
 
     protected virtual void FixedUpdate()
@@ -77,24 +81,36 @@ public abstract class Character : MonoBehaviour
 
     public virtual void Die()
     {
+        isAlive = false;
+
+        deathSfx.Play();
+
         currentSpeed = 0.0f;
         rb.linearVelocity = Vector2.zero;
 
+        // Animation de mort du personnage
         animator.Play("DeathAnimation");
-        this.enabled = false; // Désactivation du script
+        // Désactivation de la gravité, du sprite et du système de particule
         rb.gravityScale = 0.0f;
+        spriteRenderer.enabled = false;
+        _particleSystem.gameObject.SetActive(false);
 
+        // Relance le jeu après 1 seconde
         Invoke(nameof(Respawn), 1.0f);
     }
 
     protected virtual void Respawn()
     {
-        transform.position = startPosition;
+        isAlive = true;
+
+        transform.position = respawnPosition;
         currentSpeed = DefaultSpeed;
         rb.linearVelocity = Vector2.zero;
 
-        this.enabled = true; // Réactivation du script
-        rb.gravityScale = 4.0f;
+        // Réactivation de la gravité, du sprite et du système de particule
+        rb.gravityScale = DefaultGravityScale;
+        spriteRenderer.enabled = true;
+        _particleSystem.gameObject.SetActive(true);
     }
 
     protected void DettachParticleSystem()

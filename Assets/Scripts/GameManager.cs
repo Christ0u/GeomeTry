@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    [SerializeField] private EventSystem eventSystem;
     public bool PlayMode { get; set; }
     
     private void Awake()
@@ -13,6 +15,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Garde le GameManager entre les scènes et permet de ne faire qu'une instance (à faire pour le joueur ?)
+            DontDestroyOnLoad(eventSystem);
         }
         else
         {
@@ -22,11 +25,19 @@ public class GameManager : MonoBehaviour
     
     public IEnumerator LoadScene(string sceneName)
     {
-        if (!SceneExists(sceneName)) { yield break; }
+        if (!SceneExists(sceneName))
+        {
+            Debug.Log("La scène " + sceneName + " n'existe pas ou n'est pas ajouté dans le Build"); 
+            yield break;
+        }
 
         AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(sceneName);
 
-        if (loadSceneAsync == null) { yield break; }
+        if (loadSceneAsync == null)
+        {
+            Debug.Log("loadSceneAsync vaut null!");
+            yield break;
+        }
 
         yield return new WaitUntil(() => loadSceneAsync.isDone);
     }

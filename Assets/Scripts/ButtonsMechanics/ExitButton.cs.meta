@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 06c0a5d1460c4ef7957733146e5d7bb2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - exitDoorClose: {fileID: -7351661573056778716, guid: 73479220feaf11f448542189c9ab8843, type: 3}
+  - exitDoorOpen: {fileID: 5565677181935987611, guid: 223d801a26263ba4eadf9eb360c7a1d0, type: 3}
+  - doorSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
