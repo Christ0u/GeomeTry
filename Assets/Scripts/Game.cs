@@ -106,6 +106,12 @@ public class Game : MonoBehaviour
         groundInstance.transform.localScale = groundScale;
         #endregion
 
+        #region Génération du plafond
+
+
+
+        #endregion
+
         #region Musique
 
         audioSource = GetComponent<AudioSource>();
