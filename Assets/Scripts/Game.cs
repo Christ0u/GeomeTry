@@ -15,7 +15,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test");
+        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test2");
         _level = new Level(jsonFile);
 
         LaunchLevel(_level);
@@ -104,6 +104,12 @@ public class Game : MonoBehaviour
         // Instanciation du sol
         GameObject groundInstance = Instantiate(Ground, groundPosition, Quaternion.identity, Tilemap.transform);
         groundInstance.transform.localScale = groundScale;
+        #endregion
+
+        #region Génération du plafond
+
+
+
         #endregion
 
         #region Musique
