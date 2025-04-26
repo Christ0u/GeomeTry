@@ -9,8 +9,19 @@
             "y": 0
         },
         {
-            "type": "spike",
+            "type": "yellowJumpPad",
             "x": 15,
+            "y": 0
+        },
+        {
+            "type": "pinkJumpPad",
+            "x": 22,
+            "y": 0
+        },
+
+        {
+            "type": "redJumpPad",
+            "x": 25,
             "y": 0
         },
         {

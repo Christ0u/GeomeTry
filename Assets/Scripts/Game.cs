@@ -15,7 +15,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test2");
+        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test1");
         _level = new Level(jsonFile);
 
         LaunchLevel(_level);
