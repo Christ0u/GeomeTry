@@ -11,8 +11,6 @@ public class UIManager : MonoBehaviour
     private Image _backgroundImage;
     private Canvas _canvas;
 
-    public static string previousScene = "Main Menu"; // Défaut
-
     private void Awake()
     {
         _gameManager = GameManager.Instance;
@@ -74,8 +72,13 @@ public class UIManager : MonoBehaviour
     public void OnClickSwitchSceneButton(string sceneName)
     {
         Debug.Log("Scène actuelle : " + SceneManager.GetActiveScene().name);
-        previousScene = SceneManager.GetActiveScene().name;
-        Debug.Log("Scène précédente enregistrée : " + previousScene);
+
+        if(!PlayerPrefs.HasKey("previousScene"))
+        {
+            PlayerPrefs.SetString("previousScene", SceneManager.GetActiveScene().name);
+        }
+
+        Debug.Log("Scène précédente enregistrée : " + PlayerPrefs.GetString("previousScene"));
 
         StartCoroutine(_gameManager.LoadScene(sceneName));
     }
@@ -85,14 +88,14 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OnClickGoBackButton()
     {
-        if (string.IsNullOrEmpty(previousScene))
+        if (!PlayerPrefs.HasKey("previousScene"))
         {
             Debug.LogError("La variable previousScene est vide ou non initialisée !");
             return;
         }
 
-        Debug.Log("Chargement de la scène précédente : " + previousScene);
-        StartCoroutine(_gameManager.LoadScene(previousScene));
+        Debug.Log("Chargement de la scène précédente : " + PlayerPrefs.GetString("previousScene"));
+        SceneManager.LoadScene(PlayerPrefs.GetString("previousScene"));
         Debug.Log("Fin du chargement de la scène précédente.");
     }
 
