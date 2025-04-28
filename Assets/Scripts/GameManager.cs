@@ -18,13 +18,9 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // Garde le GameManager entre les scènes et permet de ne faire qu'une instance (à faire pour le joueur ?)
         }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
-    public void LaunchLevel(TextAsset levelFile)
+    public void LoadLevel(TextAsset levelFile)
     {
         if (levelFile == null)
         {
@@ -34,8 +30,8 @@ public class GameManager : MonoBehaviour
 
         SelectedLevelFile = levelFile;
         SelectedLevel = new Level(levelFile);
+        PlayMode = true;
         
-        // Lancer le niveau
         StartCoroutine(LoadScene("Level"));
     }
     

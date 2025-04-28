@@ -80,6 +80,20 @@ public class UIManager : MonoBehaviour
 
         Debug.Log("Scène précédente enregistrée : " + PlayerPrefs.GetString("previousScene"));
 
+        // Si _gameManager est null, le récupérer
+        if (_gameManager == null)
+        {
+            _gameManager = GameManager.Instance;
+            
+            if (_gameManager == null)
+            {
+                Debug.LogError("GameManager non disponible. Chargement de scène impossible.");
+                // SceneManager directement comme fallback
+                SceneManager.LoadScene(sceneName);
+                return;
+            }
+        }
+
         StartCoroutine(_gameManager.LoadScene(sceneName));
     }
 
@@ -117,7 +131,7 @@ public class UIManager : MonoBehaviour
             }
         }
         
-        _gameManager.LaunchLevel(levelFile);
+        _gameManager.LoadLevel(levelFile);
     }
     #endregion
 
