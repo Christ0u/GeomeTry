@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - EndOfMap
+  - LevelContainer
   layers:
   - Default
   - TransparentFX
