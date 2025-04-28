@@ -1,26 +1,14 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Camera : MonoBehaviour
 {
     [SerializeField] public Transform player;
     public Vector3 offset;
-    private GameManager _gameManager; // A enlever plus tard
     private float _smoothSpeed = 0.05f;
     private float _startFollowingXPosition = -5f; // La caméra commence à suivre le cube à partir de cette position en X
     private float _endFollowingXPosition; // La caméra arrête de suivre le cube à partir de cette position en X
     private bool _isFollowing = false;
     private bool _isEndObjectFound = false; // Indique si l'objet de fin a été trouvé
-
-    private void Start()
-    {
-        _gameManager = GameManager.Instance;
-
-        if (SceneManager.GetActiveScene().name != "Main Menu" && !_gameManager.PlayMode)
-        {
-            SceneManager.LoadScene("Main Menu");
-        }
-    }
 
     private void Update()
     {

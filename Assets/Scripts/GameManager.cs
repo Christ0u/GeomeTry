@@ -1,12 +1,14 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    [SerializeField] private EventSystem eventSystem;
+
+    // Gestion des niveaux
+    public TextAsset SelectedLevelFile { get; set; }
+    public Level SelectedLevel { get; set; }
     public bool PlayMode { get; set; }
     
     private void Awake()
@@ -15,12 +17,22 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Garde le GameManager entre les scènes et permet de ne faire qu'une instance (à faire pour le joueur ?)
-            DontDestroyOnLoad(eventSystem);
         }
-        else
+    }
+
+    public void LoadLevel(TextAsset levelFile)
+    {
+        if (levelFile == null)
         {
-            Destroy(gameObject);
+            Debug.LogError("Le fichier de niveau est nul !");
+            return;
         }
+
+        SelectedLevelFile = levelFile;
+        SelectedLevel = new Level(levelFile);
+        PlayMode = true;
+        
+        StartCoroutine(LoadScene("Level"));
     }
     
     public IEnumerator LoadScene(string sceneName)

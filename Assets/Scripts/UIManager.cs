@@ -11,8 +11,6 @@ public class UIManager : MonoBehaviour
     private Image _backgroundImage;
     private Canvas _canvas;
 
-    public static string previousScene = "Main Menu"; // Défaut
-
     private void Awake()
     {
         _gameManager = GameManager.Instance;
@@ -74,8 +72,27 @@ public class UIManager : MonoBehaviour
     public void OnClickSwitchSceneButton(string sceneName)
     {
         Debug.Log("Scène actuelle : " + SceneManager.GetActiveScene().name);
-        previousScene = SceneManager.GetActiveScene().name;
-        Debug.Log("Scène précédente enregistrée : " + previousScene);
+
+        if(!PlayerPrefs.HasKey("previousScene"))
+        {
+            PlayerPrefs.SetString("previousScene", SceneManager.GetActiveScene().name);
+        }
+
+        Debug.Log("Scène précédente enregistrée : " + PlayerPrefs.GetString("previousScene"));
+
+        // Si _gameManager est null, le récupérer
+        if (_gameManager == null)
+        {
+            _gameManager = GameManager.Instance;
+            
+            if (_gameManager == null)
+            {
+                Debug.LogError("GameManager non disponible. Chargement de scène impossible.");
+                // SceneManager directement comme fallback
+                SceneManager.LoadScene(sceneName);
+                return;
+            }
+        }
 
         StartCoroutine(_gameManager.LoadScene(sceneName));
     }
@@ -85,25 +102,36 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OnClickGoBackButton()
     {
-        if (string.IsNullOrEmpty(previousScene))
+        if (!PlayerPrefs.HasKey("previousScene"))
         {
             Debug.LogError("La variable previousScene est vide ou non initialisée !");
             return;
         }
 
-        Debug.Log("Chargement de la scène précédente : " + previousScene);
-        StartCoroutine(_gameManager.LoadScene(previousScene));
+        Debug.Log("Chargement de la scène précédente : " + PlayerPrefs.GetString("previousScene"));
+        SceneManager.LoadScene(PlayerPrefs.GetString("previousScene"));
         Debug.Log("Fin du chargement de la scène précédente.");
     }
 
     /// <summary>
     /// Permet de lancer une partie.
     /// </summary>
-    public void OnClickLevelButton()
+    public void OnClickLevelButton(Level level, TextAsset levelFile)
     {
-        StartCoroutine(_gameManager.LoadScene("Level"));
-        // LaunchLevel(Level);
-        _gameManager.PlayMode = true; // -> A déplacer dans le Launch
+        Debug.Log($"Click sur le niveau : {level.Name}");
+        
+        if (_gameManager == null)
+        {
+            _gameManager = GameManager.Instance;
+            
+            if (_gameManager == null)
+            {
+                Debug.LogError("GameManager non trouvé ! Impossible de lancer un niveau.");
+                return;
+            }
+        }
+        
+        _gameManager.LoadLevel(levelFile);
     }
     #endregion
 
