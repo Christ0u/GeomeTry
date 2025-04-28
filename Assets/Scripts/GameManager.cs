@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    // Gestion des niveaux
+    public TextAsset SelectedLevelFile { get; set; }
+    public Level SelectedLevel { get; set; }
     public bool PlayMode { get; set; }
     
     private void Awake()
@@ -18,6 +22,21 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void LaunchLevel(TextAsset levelFile)
+    {
+        if (levelFile == null)
+        {
+            Debug.LogError("Le fichier de niveau est nul !");
+            return;
+        }
+
+        SelectedLevelFile = levelFile;
+        SelectedLevel = new Level(levelFile);
+        
+        // Lancer le niveau
+        StartCoroutine(LoadScene("Level"));
     }
     
     public IEnumerator LoadScene(string sceneName)

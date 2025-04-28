@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,10 +14,16 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Maps/test2");
-        _level = new Level(jsonFile);
-
-        LaunchLevel(_level);
+        if (GameManager.Instance != null && GameManager.Instance.SelectedLevel != null)
+        {
+            _level = GameManager.Instance.SelectedLevel;
+            LaunchLevel(_level);
+        }
+        else
+        {
+            Debug.LogError("Le niveau sélectionné est nul !");
+            return;
+        }
     }
 
     // Méthodes

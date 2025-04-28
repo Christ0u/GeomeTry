@@ -12,6 +12,9 @@ public class Level
     public AudioClip Music { get; private set; }
     private MapItem _lastMapItem;
 
+    // Rajouter une propriété pour le fond
+    // Rajouter une propriété pour le sol ?
+
     // Constructeur
     public Level(TextAsset mapFile)
     {

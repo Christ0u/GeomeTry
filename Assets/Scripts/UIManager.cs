@@ -102,11 +102,22 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Permet de lancer une partie.
     /// </summary>
-    public void OnClickLevelButton()
+    public void OnClickLevelButton(Level level, TextAsset levelFile)
     {
-        StartCoroutine(_gameManager.LoadScene("Level"));
-        // LaunchLevel(Level);
-        _gameManager.PlayMode = true; // -> A déplacer dans le Launch
+        Debug.Log($"Click sur le niveau : {level.Name}");
+        
+        if (_gameManager == null)
+        {
+            _gameManager = GameManager.Instance;
+            
+            if (_gameManager == null)
+            {
+                Debug.LogError("GameManager non trouvé ! Impossible de lancer un niveau.");
+                return;
+            }
+        }
+        
+        _gameManager.LaunchLevel(levelFile);
     }
     #endregion
 
