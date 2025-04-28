@@ -2395,6 +2395,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9043505793469851450, guid: 91fa2c377265a0a49bdbbd7408856557, type: 3}
     - target: {fileID: 6019023456180001725, guid: a931b7615e5831e428b5701177224711, type: 3}
+      propertyPath: uiManager
+      value: 
+      objectReference: {fileID: 1152274316}
+    - target: {fileID: 6019023456180001725, guid: a931b7615e5831e428b5701177224711, type: 3}
       propertyPath: eventSystem
       value: 
       objectReference: {fileID: 0}
