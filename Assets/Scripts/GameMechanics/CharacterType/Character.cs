@@ -30,8 +30,7 @@ public abstract class Character : MonoBehaviour
         Time.timeScale = 1.5f; // Game speed
         _isGrounded = true;
         _gameManager = GameManager.Instance;
-        // respawnPosition = new Vector3(InitialPosition, 0, 0);
-        respawnPosition = new Vector3(486, 5, 0);
+        respawnPosition = new Vector3(InitialPosition, 0, 0);
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
@@ -48,6 +47,8 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (!isAlive) return; // Si le personnage est pas vivant
+
         if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
         {
             keyPressed = true;
@@ -94,7 +95,10 @@ public abstract class Character : MonoBehaviour
         // Désactivation de la gravité, du sprite et du système de particule
         rb.gravityScale = 0.0f;
         spriteRenderer.enabled = false;
-        _particleSystem.gameObject.SetActive(false);
+        if (_particleSystem != null)
+        {
+            _particleSystem.gameObject.SetActive(false);
+        }
 
         // Relance le jeu après 1 seconde
         Invoke(nameof(Respawn), 1.0f);
@@ -111,7 +115,11 @@ public abstract class Character : MonoBehaviour
         // Réactivation de la gravité, du sprite et du système de particule
         rb.gravityScale = DefaultGravityScale;
         spriteRenderer.enabled = true;
-        _particleSystem.gameObject.SetActive(true);
+        if (_particleSystem != null)
+        {
+            _particleSystem.gameObject.SetActive(true);
+        }
+
     }
 
     protected void DettachParticleSystem()
