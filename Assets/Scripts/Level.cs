@@ -38,7 +38,9 @@ public class Level
                 item["type"].stringValue,
                 item["x"].intValue,
                 item["y"].intValue,
-                item.HasField("rotation") ? item["rotation"].intValue : 0
+                item.HasField("rotation") ? item["rotation"].intValue : 0,
+                item.HasField("xOffset") ? item["xOffset"].floatValue : 0.0f,
+                item.HasField("yOffset") ? item["yOffset"].floatValue : 0.0f
             );
             Map.Add(mapItem);
 

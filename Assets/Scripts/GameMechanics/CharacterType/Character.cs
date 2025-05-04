@@ -30,7 +30,8 @@ public abstract class Character : MonoBehaviour
         Time.timeScale = 1.5f; // Game speed
         _isGrounded = true;
         _gameManager = GameManager.Instance;
-        respawnPosition = new Vector3(InitialPosition, 0, 0);
+        // respawnPosition = new Vector3(InitialPosition, 0, 0);
+        respawnPosition = new Vector3(486, 5, 0);
         currentSpeed = DefaultSpeed;
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }

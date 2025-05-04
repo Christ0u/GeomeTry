@@ -38,7 +38,7 @@ public class Game : MonoBehaviour
             Vector3 position = Tilemap.GetCellCenterWorld(new Vector3Int(mapItem.X, mapItem.Y, 0));
 
             //Ajustement de la position pour que l'objet soit centré sur une case de la tilemap
-            position += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
+            position += new Vector3(Tilemap.cellSize.x / 2 + mapItem.XOffset, Tilemap.cellSize.y / 2 + mapItem.YOffset, 0);
 
             // Rotation de l'objet
             Quaternion rotation;
