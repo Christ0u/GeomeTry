@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -111,9 +112,57 @@ public class Game : MonoBehaviour
         groundInstance.transform.localScale = groundScale;
         #endregion
 
+
         #region Génération du plafond
 
+        GameObject ceilPrefab = Resources.Load<GameObject>("Prefabs/Decors/CeilPrefab");
 
+        if (ceilPrefab == null)
+        {
+            Debug.LogError("Le prefab de plafond (CeilPrefab) est introuvable.");
+            return;
+        }
+
+        // Récupération des portails
+        var portals = level.Map
+            .Where(item => item.Type.Contains("Portal"))
+            .OrderBy(item => item.X)
+            .ToList();
+
+        for (int i = 0; i < portals.Count; i++)
+        {
+            Debug.Log("Portail du type " + portals[i].Type + " trouvé aux coordonnées : " + portals[i].X + ", " + portals[i].Y);
+
+            if (portals[i].Type == "shipPortal")
+            {
+                int startX = portals[i].X + 2;
+                int endX;
+
+                int nextPortalIndex = i + 1;
+
+                if (nextPortalIndex < portals.Count)
+                {
+                    endX = portals[nextPortalIndex].X;
+                }
+                else
+                {
+                    endX = level.getLastMapItem().X + offset;
+                }
+
+                // Récupérer la position Y la plus haute dans l'intervalle [startX, endX]
+                int highestY = level.getHighestY(startX, endX);
+
+                // Définir la taille et la position du plafond
+                int ceilSize = endX - startX;
+                Vector3 ceilScale = Tilemap.GetCellCenterWorld(new Vector3Int(ceilSize, 7, 0));
+                Vector3 ceilPosition = Tilemap.GetCellCenterWorld(new Vector3Int((startX + endX) / 2, highestY + 4, 0)); // Position Y ajustée
+                ceilPosition += new Vector3(Tilemap.cellSize.x / 2, Tilemap.cellSize.y / 2, 0);
+
+                // Instancier le plafond
+                GameObject ceilInstance = Instantiate(ceilPrefab, ceilPosition, Quaternion.identity, Tilemap.transform);
+                ceilInstance.transform.localScale = ceilScale;
+            }
+        }
 
         #endregion
 
