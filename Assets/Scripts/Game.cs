@@ -1,6 +1,8 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Defective.JSON;
+using System.IO;
 
 public class Game : MonoBehaviour
 {
@@ -213,5 +215,83 @@ public class Game : MonoBehaviour
                 }
             }
         }
+        // TEMPORAIRE
+        // Exporter la map en JSON lorsque la touche "P" est pressée
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ExportCurrentMapToJson();
+        }
+
+    }
+
+    // TEMPORAIRE
+    void ExportCurrentMapToJson()
+    {
+        if (Tilemap == null)
+        {
+            Debug.LogError("La Tilemap n'est pas définie !");
+            return;
+        }
+
+        JSONObject json = new JSONObject();
+        json.AddField("id", -1); // L'id est maintenant la première propriété
+        json.AddField("name", "LevelName");
+        json.AddField("difficulty", -1);
+
+        JSONObject mapArray = new JSONObject();
+        mapArray.type = JSONObject.Type.Array;
+
+        // Récupérer tous les enfants de la Tilemap et les trier par x
+        var children = Tilemap.transform.Cast<Transform>()
+            .Select(child => new
+            {
+                GameObject = child.gameObject,
+                CellPosition = Tilemap.WorldToCell(child.position)
+            })
+            .OrderBy(item => item.CellPosition.x)
+            .ThenBy(item => item.CellPosition.y) // Optionnel : trier aussi par y si nécessaire
+            .ToList();
+
+        // Parcourir les enfants triés
+        foreach (var item in children)
+        {
+            GameObject obj = item.GameObject;
+            Vector3Int cellPosition = item.CellPosition;
+
+            // Récupérer le type à partir du nom de l'objet
+            string type = obj.name.Replace("(Clone)", "").Replace("Prefab", "").Trim();
+
+            // Mettre en minuscule la première lettre du type
+            if (!string.IsNullOrEmpty(type))
+            {
+                type = char.ToLower(type[0]) + type.Substring(1);
+            }
+
+            // Ignorer le joueur (par exemple, si son nom est "Cube")
+            if (type == "cube")
+            {
+                continue;
+            }
+
+            JSONObject mapObject = new JSONObject();
+            mapObject.AddField("type", type); // Utiliser le nom nettoyé et modifié comme type
+            mapObject.AddField("x", cellPosition.x);
+            mapObject.AddField("y", cellPosition.y);
+
+            mapArray.Add(mapObject);
+        }
+
+        json.AddField("map", mapArray);
+
+        // Ajouter la musique
+        json.AddField("music", "MusicName");
+
+        string jsonString = json.ToString(true);
+
+        // Sauvegarder le fichier JSON dans le dossier Resources\Maps
+        string path = Path.Combine(Application.dataPath, "Resources", "Maps", $"{_level?.Name ?? "UnnamedLevel"}_export.json");
+        File.WriteAllText(path, jsonString);
+
+        Debug.Log($"Map exportée avec succès : {path}");
     }
 }
