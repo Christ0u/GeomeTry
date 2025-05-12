@@ -9,8 +9,29 @@
             "y": 0
         },
         {
-            "type": "spike",
-            "x": 15,
+            "type": "yellowJumpOrb",
+            "x": 12,
+            "y": 2
+        },
+        {
+            "type": "pinkJumpOrb",
+            "x": 17,
+            "y": 5
+        },
+        {
+            "type": "redJumpOrb",
+            "x": 22,
+            "y": 6
+        },
+        {
+            "type": "pinkJumpPad",
+            "x": 22,
+            "y": 0
+        },
+
+        {
+            "type": "redJumpPad",
+            "x": 25,
             "y": 0
         },
         {
