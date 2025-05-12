@@ -257,7 +257,7 @@ public class UIManager : MonoBehaviour
 
             // Définir explicitement la position Z pour être derrière les autres éléments
             Vector3 position = backgroundContainerRectTransform.localPosition;
-            position.z = 115;
+            position.z = 100;
             backgroundContainerRectTransform.localPosition = position;
 
             // Placer en premier dans la hiérarchie
