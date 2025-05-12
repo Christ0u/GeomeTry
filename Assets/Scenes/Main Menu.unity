@@ -1978,7 +1978,7 @@ RectTransform:
   - {fileID: 1247773252}
   - {fileID: 1015026602}
   - {fileID: 45397546}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1539755943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2202,7 +2202,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 4, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1400676210}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2139558391
@@ -2394,6 +2395,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9043505793469851450, guid: 91fa2c377265a0a49bdbbd7408856557, type: 3}
     - target: {fileID: 6019023456180001725, guid: a931b7615e5831e428b5701177224711, type: 3}
+      propertyPath: uiManager
+      value: 
+      objectReference: {fileID: 1152274316}
+    - target: {fileID: 6019023456180001725, guid: a931b7615e5831e428b5701177224711, type: 3}
       propertyPath: eventSystem
       value: 
       objectReference: {fileID: 0}
@@ -2408,5 +2413,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 4903300967787969633}
   - {fileID: 1539755943}
-  - {fileID: 1400676210}
   - {fileID: 619164843}

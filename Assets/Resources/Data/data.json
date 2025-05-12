@@ -1,0 +1,9 @@
+{
+  "maps": {
+    "1": { "progress": 0, "attempts": 0, "jumps": 0 },
+    "999": { "progress": 0, "attempts": 0, "jumps": 0 },
+    "998": { "progress": 0, "attempts": 0, "jumps": 0 }
+  },
+  "totalJumps": 0,
+  "totalAttempts": 0
+}

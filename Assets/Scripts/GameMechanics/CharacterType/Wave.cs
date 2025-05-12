@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Wave : Character 
+public class Wave : Character
 {
     private float _modifier = 1; // 1 ou -1
 
@@ -12,7 +12,13 @@ public class Wave : Character
 
     protected override void FixedUpdate()
     {
+        if (!isAlive) return;
 
+        HandleMovement();
+    }
+
+    protected override void HandleMovement()
+    {
         Vector2 mouvement = currentSpeed * Time.deltaTime * new Vector2(1, 1);
         mouvement.y *= _modifier;
         transform.Translate(mouvement);
@@ -22,9 +28,14 @@ public class Wave : Character
 
     protected override void Update()
     {
-        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)) {
+        if (!isAlive) return;
+
+        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        {
             keyPressed = true;
-        } else {
+        }
+        else
+        {
             keyPressed = false;
         }
         onClick();
@@ -35,9 +46,10 @@ public class Wave : Character
         if (keyPressed)
         {
             _modifier = 1;
-        } else {
+        }
+        else
+        {
             _modifier = -1;
         }
     }
-    
 }

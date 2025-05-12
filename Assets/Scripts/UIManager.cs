@@ -50,11 +50,11 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OnClickQuitGame()
     {
-        #if UNITY_EDITOR
-        Debug.Log("Appel à la fonction OnClickQuitGame - Ne marche que en build.");
-        #else
+#if UNITY_EDITOR
+        //Debug.Log("Appel à la fonction OnClickQuitGame - Ne marche que en build.");
+#else
         Application.Quit();
-        #endif
+#endif
     }
 
     /// <summary>
@@ -71,20 +71,20 @@ public class UIManager : MonoBehaviour
     /// <param name="sceneName">Nom de la scène à charger.</param>
     public void OnClickSwitchSceneButton(string sceneName)
     {
-        Debug.Log("Scène actuelle : " + SceneManager.GetActiveScene().name);
+        //Debug.Log("Scène actuelle : " + SceneManager.GetActiveScene().name);
 
-        if(!PlayerPrefs.HasKey("previousScene"))
+        if (!PlayerPrefs.HasKey("previousScene"))
         {
             PlayerPrefs.SetString("previousScene", SceneManager.GetActiveScene().name);
         }
 
-        Debug.Log("Scène précédente enregistrée : " + PlayerPrefs.GetString("previousScene"));
+        //Debug.Log("Scène précédente enregistrée : " + PlayerPrefs.GetString("previousScene"));
 
         // Si _gameManager est null, le récupérer
         if (_gameManager == null)
         {
             _gameManager = GameManager.Instance;
-            
+
             if (_gameManager == null)
             {
                 Debug.LogError("GameManager non disponible. Chargement de scène impossible.");
@@ -108,9 +108,9 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Chargement de la scène précédente : " + PlayerPrefs.GetString("previousScene"));
+        //Debug.Log("Chargement de la scène précédente : " + PlayerPrefs.GetString("previousScene"));
         SceneManager.LoadScene(PlayerPrefs.GetString("previousScene"));
-        Debug.Log("Fin du chargement de la scène précédente.");
+        //Debug.Log("Fin du chargement de la scène précédente.");
     }
 
     /// <summary>
@@ -118,19 +118,19 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OnClickLevelButton(Level level, TextAsset levelFile)
     {
-        Debug.Log($"Click sur le niveau : {level.Name}");
-        
+        //Debug.Log($"Click sur le niveau : {level.Name}");
+
         if (_gameManager == null)
         {
             _gameManager = GameManager.Instance;
-            
+
             if (_gameManager == null)
             {
                 Debug.LogError("GameManager non trouvé ! Impossible de lancer un niveau.");
                 return;
             }
         }
-        
+
         _gameManager.LoadLevel(levelFile);
     }
     #endregion
@@ -154,8 +154,14 @@ public class UIManager : MonoBehaviour
 
         if (_canvas != null && _devUtils != null && !SceneManager.GetActiveScene().name.Equals("Level"))
         {
-            Debug.Log("Application du fond...");
+            //Debug.Log("Application du fond...");
             SetBackground(_canvas, _devUtils.backgroundIndex, _devUtils.backgroundMenuColor);
+        }
+
+        if (SceneManager.GetActiveScene().name.Equals("Level"))
+        {
+            //Debug.Log("Application du fond générique des niveaux...");
+            SetBackground(_canvas, _devUtils.GenerateRandomInt(1, _devUtils.backgroundQuantity), _devUtils.GenerateRandomColor());
         }
     }
 
@@ -196,7 +202,7 @@ public class UIManager : MonoBehaviour
         if (newSprite != null)
         {
             _backgroundImage.sprite = newSprite;
-            Debug.Log($"Image {imagePath} chargée avec succès.");
+            //Debug.Log($"Image {imagePath} chargée avec succès.");
         }
         else
         {
@@ -236,6 +242,11 @@ public class UIManager : MonoBehaviour
     {
         if (backgroundPrefab != null)
         {
+            // Supprimer les backgrounds existants pour éviter l'accumulation
+            GameObject existingBackground = GameObject.Find("Background");
+            if (existingBackground != null)
+                Destroy(existingBackground);
+
             (float canvasWidth, float canvasHeight, float bgWidth, float bgHeight) = GetBackgroundSizes(canvas, backgroundPrefab);
 
             // Créer un conteneur pour contenir les tuiles du fond
@@ -243,7 +254,14 @@ public class UIManager : MonoBehaviour
             RectTransform backgroundContainerRectTransform = backgroundContainer.AddComponent<RectTransform>();
 
             backgroundContainer.transform.SetParent(canvas.transform, false);
-            backgroundContainer.transform.SetSiblingIndex(0); // Le "0" signifie que l'objet sera placé au tout début de la hiérarchie
+
+            // Définir explicitement la position Z pour être derrière les autres éléments
+            Vector3 position = backgroundContainerRectTransform.localPosition;
+            position.z = 100;
+            backgroundContainerRectTransform.localPosition = position;
+
+            // Placer en premier dans la hiérarchie
+            backgroundContainer.transform.SetAsFirstSibling();
 
             // Remplir toute la surface du conteneur
             backgroundContainerRectTransform.anchorMin = new Vector2(0, 0);
