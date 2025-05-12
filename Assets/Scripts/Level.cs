@@ -1,6 +1,7 @@
 using UnityEngine;
 using Defective.JSON; // Dépendance externe : https://assetstore.unity.com/packages/tools/input-management/json-object-710#description
 using System.Collections.Generic;
+using System.Linq;
 
 public class Level
 {
@@ -38,7 +39,9 @@ public class Level
                 item["type"].stringValue,
                 item["x"].intValue,
                 item["y"].intValue,
-                item.HasField("rotation") ? item["rotation"].intValue : 0
+                item.HasField("rotation") ? item["rotation"].intValue : 0,
+                item.HasField("xOffset") ? item["xOffset"].floatValue : 0.0f,
+                item.HasField("yOffset") ? item["yOffset"].floatValue : 0.0f
             );
             Map.Add(mapItem);
 
@@ -56,5 +59,16 @@ public class Level
     public MapItem getLastMapItem()
     {
         return _lastMapItem;
+    }
+
+    public int getHighestY(int startX, int endX)
+    {
+        // Trouver l'élément avec la plus grande valeur de Y dans la plage donnée
+        var highestItem = Map
+            .Where(item => item.X >= startX && item.X <= endX && item.Y > 0)
+            .OrderByDescending(item => item.Y)
+            .FirstOrDefault();
+
+        return highestItem.Y;
     }
 }

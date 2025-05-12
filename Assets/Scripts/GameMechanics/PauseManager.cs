@@ -106,7 +106,7 @@ public class PauseManager : MonoBehaviour
         }
 
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = 1.5f;
         isPaused = false;
 
         // Vérifier si la source audio existe et si elle a été mise en pause

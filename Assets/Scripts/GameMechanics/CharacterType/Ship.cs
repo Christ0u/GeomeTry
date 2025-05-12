@@ -3,7 +3,6 @@ using UnityEngine;
 public class Ship : Character
 {
     //Debug : SerializeField pour modifier les valeurs dans l'éditeur
-    [SerializeField] private float flyForce = 35.0f;
     [SerializeField] private float gravityScale = 2.5f;
     [SerializeField] private float maxVelocityY = 10.0f;
 
@@ -29,16 +28,18 @@ public class Ship : Character
 
     protected override void HandleMovement()
     {
+        if (!isAlive) return; // Si le vaisseau est pas vivant
+        
         if (isFlying)
         {
-            // on gère les particules ici j'ai pas reussi a faire mieux ... pas optimal car dans HandleMovement...
-            rb.AddForce(Vector2.up * flyForce, ForceMode2D.Force);
-            ReattachParticleSystem();
-            rb.linearVelocity = new Vector2(rb.linearVelocityX, Mathf.Min(rb.linearVelocityY + 0.5f, maxVelocityY));
+            rb.gravityScale = -Mathf.Abs(gravityScale);
+            ReattachParticleSystem(); // Détache les particules si nécessaire
         }
         else
         {
-            DettachParticleSystem();
+            // Gravité normale pour descendre
+            rb.gravityScale = Mathf.Abs(gravityScale);
+            DettachParticleSystem(); // Détache les particules si nécessaire
         }
 
         // on limite la vitesse en y sinon ça part en cacahuète
@@ -68,10 +69,5 @@ public class Ship : Character
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-
-        if (!isFlying && rb.linearVelocityY < 0)
-        {
-            rb.AddForce(Vector2.down * 5f, ForceMode2D.Force);
-        }
     }
 }
