@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8038929313485462998}
   - component: {fileID: 2969688683941052073}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PauseManager
-  m_TagString: Untagged
+  m_TagString: PauseMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2834c1ae77770142b0163f3a0135b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuUI: {fileID: 0}
+  pauseMenuUI: {fileID: 4526263021284510497, guid: c73f2e4f2798006459b56b4ec57d3742, type: 3}
