@@ -109,6 +109,15 @@ public class Game : MonoBehaviour
         // Instanciation du sol
         GameObject groundInstance = Instantiate(Ground, groundPosition, Quaternion.identity, Tilemap.transform);
         groundInstance.transform.localScale = groundScale;
+
+        // Couleur du sol
+        Renderer groundRenderer = groundInstance.GetComponent<Renderer>();
+        if (groundRenderer != null)
+        {
+            // Générer une couleur aléatoire
+            Color groundColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            groundRenderer.material.color = groundColor;
+        }
         #endregion
 
         #region Génération du plafond
