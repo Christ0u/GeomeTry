@@ -30,7 +30,7 @@ public class Game : MonoBehaviour
     // Méthodes
     void LaunchLevel(Level level)
     {
-        Debug.Log("Lancement du niveau " + level.Name);
+        //Debug.Log("Lancement du niveau " + level.Name);
 
         #region Génération de le map
 
@@ -140,7 +140,7 @@ public class Game : MonoBehaviour
 
         for (int i = 0; i < portals.Count; i++)
         {
-            Debug.Log("Portail du type " + portals[i].Type + " trouvé aux coordonnées : " + portals[i].X + ", " + portals[i].Y);
+            //Debug.Log("Portail du type " + portals[i].Type + " trouvé aux coordonnées : " + portals[i].X + ", " + portals[i].Y);
 
             if (portals[i].Type == "shipPortal")
             {

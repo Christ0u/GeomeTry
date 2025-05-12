@@ -53,7 +53,7 @@ public class Level
 
         // Chargement de la musique
         Music = Resources.Load<AudioClip>("Songs/Musics/" + jsonData["music"].stringValue);
-        Debug.Log("Chargement de la musique " + Music.name);
+        //Debug.Log("Chargement de la musique " + Music.name);
     }
 
     public MapItem getLastMapItem()

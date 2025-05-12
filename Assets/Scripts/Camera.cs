@@ -20,7 +20,7 @@ public class Camera : MonoBehaviour
             {
                 _endFollowingXPosition = endObject.transform.position.x;
                 _isEndObjectFound = true; // L'objet de fin a été trouvé
-                Debug.Log($"L'objet de fin a été trouvé avec succès : {_endFollowingXPosition}");
+                //Debug.Log($"L'objet de fin a été trouvé avec succès : {_endFollowingXPosition}");
             }
         }
     }
