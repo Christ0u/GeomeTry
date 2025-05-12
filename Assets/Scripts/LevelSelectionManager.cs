@@ -27,11 +27,11 @@ public class LevelSelectionManager : MonoBehaviour
 
     void LoadLevelFiles()
     {
-        // Resources/Maps/BASE
-        TextAsset[] files = Resources.LoadAll<TextAsset>("Maps/BASE");
+        // Resources/Maps/Base
+        TextAsset[] files = Resources.LoadAll<TextAsset>("Maps/Base");
         levelFiles.AddRange(files);
         
-        Debug.Log($"{levelFiles.Count} niveaux trouvés dans Maps/BASE");
+        Debug.Log($"{levelFiles.Count} niveaux trouvés dans Maps/Base");
     }
 
     void GenerateLevelButtons()
