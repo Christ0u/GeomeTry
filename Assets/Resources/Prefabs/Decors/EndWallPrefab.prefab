@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  completedLevelCanvas: {fileID: 2859654232424820860, guid: 86df923e92a7e7246a8c76430bc52891, type: 3}
 --- !u!1 &3062475344695156340
 GameObject:
   m_ObjectHideFlags: 0
