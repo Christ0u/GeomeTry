@@ -32,6 +32,8 @@ public class Cube : Character
             DettachParticleSystem();
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
             _isGrounded = false;
+            jumpCount++;
+            Debug.Log("Jump count: " + jumpCount);
         }
     }
 

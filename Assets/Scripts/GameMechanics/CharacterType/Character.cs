@@ -12,6 +12,7 @@ public abstract class Character : MonoBehaviour
     protected bool _isGrounded;
     public const float InitialPosition = -5f;
     public bool isAlive;
+    public int jumpCount { get; protected set; } = 0;
 
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected LayerMask groundLayer;
@@ -99,6 +100,13 @@ public abstract class Character : MonoBehaviour
         {
             _particleSystem.gameObject.SetActive(false);
         }
+
+        // Mise à jour des données de saut
+        DataManager.Instance.UpdateTotalJumps(jumpCount);
+
+
+        // Réinitialisation du compteur de sauts
+        jumpCount = 0;
 
         // Relance le jeu après 1 seconde
         Invoke(nameof(Respawn), 1.0f);
