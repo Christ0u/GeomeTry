@@ -282,7 +282,7 @@ public class Game : MonoBehaviour
             {
                 mapObject.AddField("yOffset", -0.45f);
             }
-            else if (type == "smallTile" && cellPosition.y == 0)
+            else if (type == "smallTile")
             {
                 mapObject.AddField("yOffset", 0.27f);
             }
