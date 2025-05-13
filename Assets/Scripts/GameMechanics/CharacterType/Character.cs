@@ -83,6 +83,8 @@ public abstract class Character : MonoBehaviour
 
     public virtual void Die()
     {
+        if (!isAlive) return; // Si le personnage est pas vivant
+
         isAlive = false;
 
         deathSfx.Play();
