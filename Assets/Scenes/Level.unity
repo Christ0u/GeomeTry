@@ -1324,12 +1324,20 @@ PrefabInstance:
       value: CanvasCompletedLevel
       objectReference: {fileID: 0}
     - target: {fileID: 2859654232424820860, guid: 86df923e92a7e7246a8c76430bc52891, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2859654232424820860, guid: 86df923e92a7e7246a8c76430bc52891, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5216943578505922519, guid: 86df923e92a7e7246a8c76430bc52891, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007609567162930129, guid: 86df923e92a7e7246a8c76430bc52891, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6766122257213808584, guid: 86df923e92a7e7246a8c76430bc52891, type: 3}
       propertyPath: m_Camera
