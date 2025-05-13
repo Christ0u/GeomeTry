@@ -1,0 +1,636 @@
+{
+  "id": 3,
+  "name": "Jumpy Nightmare",
+  "difficulty": 1,
+  "map": [
+    {
+      "type": "smallSpike",
+      "x": 2,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 3,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 4,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 5,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "yellowJumpOrb",
+      "x": 5,
+      "y": 1
+    },
+    {
+      "type": "smallSpike",
+      "x": 6,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 7,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 8,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 9,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 10,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 11,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "yellowJumpOrb",
+      "x": 11,
+      "y": 2
+    },
+    {
+      "type": "smallSpike",
+      "x": 12,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 13,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 14,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 15,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 16,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 17,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "pinkJumpOrb",
+      "x": 17,
+      "y": 3
+    },
+    {
+      "type": "smallSpike",
+      "x": 18,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 19,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 20,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 21,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "redJumpOrb",
+      "x": 21,
+      "y": 4
+    },
+    {
+      "type": "smallSpike",
+      "x": 22,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 23,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 24,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 25,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 26,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 27,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 28,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 29,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 30,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "redJumpOrb",
+      "x": 30,
+      "y": 4
+    },
+    {
+      "type": "smallSpike",
+      "x": 31,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 32,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 33,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 34,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 35,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 36,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 37,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 38,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "smallSpike",
+      "x": 39,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "pinkJumpOrb",
+      "x": 39,
+      "y": 1
+    },
+    {
+      "type": "redJumpOrb",
+      "x": 39,
+      "y": 5
+    },
+    {
+      "type": "smallSpike",
+      "x": 40,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "spike",
+      "x": 40,
+      "y": 8,
+      "rotation": 90
+    },
+    {
+      "type": "spike",
+      "x": 40,
+      "y": 9,
+      "rotation": 90
+    },
+    {
+      "type": "spike",
+      "x": 40,
+      "y": 10,
+      "rotation": 90
+    },
+    {
+      "type": "smallSpike",
+      "x": 41,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "tile",
+      "x": 41,
+      "y": 1
+    },
+    {
+      "type": "spike",
+      "x": 41,
+      "y": 7,
+      "rotation": 180
+    },
+    {
+      "type": "tile",
+      "x": 41,
+      "y": 8
+    },
+    {
+      "type": "tile",
+      "x": 41,
+      "y": 9
+    },
+    {
+      "type": "tile",
+      "x": 41,
+      "y": 10
+    },
+    {
+      "type": "spike",
+      "x": 41,
+      "y": 11
+    },
+    {
+      "type": "smallSpike",
+      "x": 42,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "tile",
+      "x": 42,
+      "y": 1
+    },
+    {
+      "type": "spike",
+      "x": 42,
+      "y": 7,
+      "rotation": 180
+    },
+    {
+      "type": "tile",
+      "x": 42,
+      "y": 8
+    },
+    {
+      "type": "tile",
+      "x": 42,
+      "y": 10
+    },
+    {
+      "type": "spike",
+      "x": 42,
+      "y": 11
+    },
+    {
+      "type": "smallSpike",
+      "x": 43,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "tile",
+      "x": 43,
+      "y": 1
+    },
+    {
+      "type": "spike",
+      "x": 43,
+      "y": 7,
+      "rotation": 180
+    },
+    {
+      "type": "tile",
+      "x": 43,
+      "y": 8
+    },
+    {
+      "type": "tile",
+      "x": 43,
+      "y": 9
+    },
+    {
+      "type": "tile",
+      "x": 43,
+      "y": 10
+    },
+    {
+      "type": "spike",
+      "x": 43,
+      "y": 11
+    },
+    {
+      "type": "smallSpike",
+      "x": 44,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "tile",
+      "x": 44,
+      "y": 1
+    },
+    {
+      "type": "spike",
+      "x": 44,
+      "y": 8,
+      "rotation": -90
+    },
+    {
+      "type": "spike",
+      "x": 44,
+      "y": 9,
+      "rotation": -90
+    },
+    {
+      "type": "spike",
+      "x": 44,
+      "y": 10,
+      "rotation": -90
+    },
+    {
+      "type": "smallSpike",
+      "x": 45,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "tile",
+      "x": 45,
+      "y": 1
+    },
+    {
+      "type": "smallSpike",
+      "x": 46,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "tile",
+      "x": 46,
+      "y": 1
+    },
+    {
+      "type": "smallSpike",
+      "x": 47,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "tile",
+      "x": 47,
+      "y": 1
+    },
+    {
+      "type": "smallSpike",
+      "x": 48,
+      "y": 0,
+      "yOffset": -0.27500000596046448
+    },
+    {
+      "type": "tile",
+      "x": 48,
+      "y": 1
+    },
+    {
+      "type": "tile",
+      "x": 49,
+      "y": 0
+    },
+    {
+      "type": "tile",
+      "x": 49,
+      "y": 1
+    },
+    {
+      "type": "tile",
+      "x": 50,
+      "y": 0
+    },
+    {
+      "type": "tile",
+      "x": 51,
+      "y": 0
+    },
+    {
+      "type": "tile",
+      "x": 52,
+      "y": 0
+    },
+    {
+      "type": "tile",
+      "x": 53,
+      "y": 0
+    },
+    {
+      "type": "spike",
+      "x": 53,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 54,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 55,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 56,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 57,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 58,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 59,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "yellowJumpPad",
+      "x": 60,
+      "y": 0,
+      "yOffset": -0.44999998807907104
+    },
+    {
+      "type": "spike",
+      "x": 60,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 61,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 62,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 63,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "pinkJumpPad",
+      "x": 64,
+      "y": 0,
+      "yOffset": -0.44999998807907104
+    },
+    {
+      "type": "spike",
+      "x": 64,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 65,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 66,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 67,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 68,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 69,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 70,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 71,
+      "y": 3,
+      "rotation": 180
+    },
+    {
+      "type": "spike",
+      "x": 72,
+      "y": 3,
+      "rotation": 180
+    }
+  ],
+  "music": "Jumper"
+}
