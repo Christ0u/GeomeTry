@@ -101,25 +101,27 @@ public abstract class Character : MonoBehaviour
         }
 
         // Relance le jeu après 1 seconde
+        //Invoke(nameof(Respawn), 1.0f);
         Invoke(nameof(Respawn), 1.0f);
     }
 
-    protected virtual void Respawn()
+    private void Respawn()
     {
+        // Détruit l'ancien personnage
+        Destroy(gameObject);
+
+        // Instancie le prefab du cube à la position de départ
+        var cubePrefab = Resources.Load<GameObject>("Prefabs/Player/CubePrefab");
+        var tilemap = FindFirstObjectByType<UnityEngine.Tilemaps.Tilemap>();
+        Vector3 spawnPosition = tilemap.GetCellCenterWorld(new Vector3Int(-10, 1, 0)) + new Vector3(tilemap.cellSize.x / 2, tilemap.cellSize.y / 2, 0);
+        var newCube = Object.Instantiate(cubePrefab, spawnPosition, Quaternion.identity, tilemap.transform);
+
+        // Réattache la caméra si besoin
+        var cameraInstance = FindFirstObjectByType<Camera>();
+        if (cameraInstance != null)
+            cameraInstance.player = newCube.transform;
+        
         isAlive = true;
-
-        transform.position = respawnPosition;
-        currentSpeed = DefaultSpeed;
-        rb.linearVelocity = Vector2.zero;
-
-        // Réactivation de la gravité, du sprite et du système de particule
-        rb.gravityScale = DefaultGravityScale;
-        spriteRenderer.enabled = true;
-        if (_particleSystem != null)
-        {
-            _particleSystem.gameObject.SetActive(true);
-        }
-
     }
 
     protected void DettachParticleSystem()
