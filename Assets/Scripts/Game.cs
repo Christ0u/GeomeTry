@@ -144,7 +144,7 @@ public class Game : MonoBehaviour
         {
             //Debug.Log("Portail du type " + portals[i].Type + " trouvé aux coordonnées : " + portals[i].X + ", " + portals[i].Y);
 
-            if (portals[i].Type == "shipPortal")
+            if (portals[i].Type == "shipPortal" || portals[i].Type == "wavePortal")
             {
                 int startX = portals[i].X + 2;
                 int endX;
