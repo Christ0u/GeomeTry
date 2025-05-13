@@ -278,6 +278,15 @@ public class Game : MonoBehaviour
             mapObject.AddField("x", cellPosition.x);
             mapObject.AddField("y", cellPosition.y);
 
+            if (type == "yellowJumpPad" || type == "pinkJumpPad" || type == "redJumpPad")
+            {
+                mapObject.AddField("yOffset", -0.45f);
+            }
+            else if (type == "smallTile" && cellPosition.y == 0)
+            {
+                mapObject.AddField("yOffset", 0.27f);
+            }
+
             mapArray.Add(mapObject);
         }
 
