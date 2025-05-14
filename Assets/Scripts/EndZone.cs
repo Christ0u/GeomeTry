@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class EndZone : MonoBehaviour
 {
-    [SerializeField] Character player;
+    [SerializeField] private Character player;
+    private GameObject completedLevelCanvas; // Référence au Canvas
     private GameManager _gameManager;
 
     private void Start()
@@ -12,6 +13,23 @@ public class EndZone : MonoBehaviour
         if (_gameManager == null)
         {
             Debug.LogError("GameManager.Instance est null dans EndZone!");
+        }
+
+        // Recherche du Canvas dans la scène par son nom ou sous MainCamera
+        completedLevelCanvas = GameObject.Find("CanvasCompletedLevel");
+        if (completedLevelCanvas == null)
+        {
+            Camera mainCamera = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<Camera>();
+            Transform mainCameraTransform = mainCamera?.transform;
+            if (mainCameraTransform != null)
+            {
+                completedLevelCanvas = mainCameraTransform.Find("CanvasCompletedLevel")?.gameObject;
+            }
+        }
+
+        if (completedLevelCanvas == null)
+        {
+            Debug.LogError("Le Canvas 'CanvasCompletedLevel' est introuvable dans la scène ou sous MainCamera.");
         }
     }
 
@@ -25,15 +43,25 @@ public class EndZone : MonoBehaviour
             {
                 _gameManager.PlayMode = false;
             }
-            
-            Debug.Log("You win!");
-            
+
+            //Debug.Log("You win!");
+
+            // Activer le Canvas
+            if (completedLevelCanvas != null)
+            {
+                completedLevelCanvas.SetActive(true);
+            }
+            else
+            {
+                Debug.LogError("Le Canvas 'CompletedLevelCanvas' est null !");
+            }
+
             Destroy(character.gameObject);
-            
-            Invoke("LoadLevelSelectionMenu", 0.5f); // 2eme argument = temps avant de charger la scène
+
+            Invoke("LoadLevelSelectionMenu", 5f); // 2eme argument = temps avant de charger la scène
         }
     }
-    
+
     private void LoadLevelSelectionMenu()
     {
         if (_gameManager != null)

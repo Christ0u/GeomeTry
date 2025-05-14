@@ -144,7 +144,7 @@ public class Game : MonoBehaviour
         {
             //Debug.Log("Portail du type " + portals[i].Type + " trouvé aux coordonnées : " + portals[i].X + ", " + portals[i].Y);
 
-            if (portals[i].Type == "shipPortal")
+            if (portals[i].Type == "shipPortal" || portals[i].Type == "wavePortal")
             {
                 int startX = portals[i].X + 2;
                 int endX;
@@ -277,6 +277,19 @@ public class Game : MonoBehaviour
             mapObject.AddField("type", type); // Utiliser le nom nettoyé et modifié comme type
             mapObject.AddField("x", cellPosition.x);
             mapObject.AddField("y", cellPosition.y);
+
+            if (type == "yellowJumpPad" || type == "pinkJumpPad" || type == "redJumpPad")
+            {
+                mapObject.AddField("yOffset", -0.45f);
+            }
+            else if (type == "smallTile")
+            {
+                mapObject.AddField("yOffset", 0.27f);
+            }
+            else if (type == "smallSpike")
+            {
+                mapObject.AddField("yOffset", -0.275f);
+            }
 
             mapArray.Add(mapObject);
         }
