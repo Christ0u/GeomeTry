@@ -56,7 +56,7 @@ public class Ship : Character
         _particleSystem.transform.rotation = Quaternion.Euler(0, 0, rotation.eulerAngles.z + 180);
 
         // position du particule system
-        Vector3 offset = rotation * new Vector3(-0.5f, 0, 0);
+        Vector3 offset = rotation * new Vector3(-0.5f, 0, -1);
         _particleSystem.transform.position = spriteRenderer.transform.position + offset;
 
     }

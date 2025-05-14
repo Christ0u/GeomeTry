@@ -134,7 +134,7 @@ public abstract class Character : MonoBehaviour
     protected void ReattachParticleSystem()
     {
         _particleSystem.Play();
-        _particleSystem.transform.localPosition = new Vector3(0, -0.5f, 0);
+        _particleSystem.transform.localPosition = new Vector3(0, -0.5f, -20);
     }
 
     protected virtual void OnDrawGizmos()
