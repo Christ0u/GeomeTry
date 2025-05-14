@@ -1,7 +1,7 @@
 {
-	"id":-1,
-	"name":"LevelName",
-	"difficulty":-1,
+	"id":2,
+	"name":"Back on Track",
+	"difficulty":1,
 	"map":[
 		{
 			"type":"yellowJumpPad",
@@ -1193,17 +1193,7 @@
 			"type":"tile",
 			"x":339,
 			"y":1
-		},
-		{
-			"type":"endWall",
-			"x":355,
-			"y":0
-		},
-		{
-			"type":"endWall",
-			"x":371,
-			"y":0
 		}
 	],
-	"music":"MusicName"
+	"music":"BackOnTrack"
 }
