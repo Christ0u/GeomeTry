@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     public Tilemap Tilemap;
 
     // Propriétés
-    private GameMode _gameMode;
+    //private GameMode _gameMode;
     private Level _level;
     AudioSource audioSource;
 
