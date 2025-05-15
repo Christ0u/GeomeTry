@@ -1,0 +1,70 @@
+@startuml GeomeTry
+
+enum PortalType 
+
+class ExitButton
+
+abstract class Character
+
+class Cube
+
+class Ship
+
+class Wave
+
+class PauseManager
+
+class CharacterPortal
+
+class Camera
+
+class DeathZone
+
+class DevUtils
+
+class EndZone
+
+class Game
+
+class GameManager
+
+class JumpOrb
+
+class JumpPad
+
+class Level
+
+class LevelManager
+
+struct MapItem
+
+class Prefab <<static>>
+
+class ProgressBar
+
+class UIManager
+
+' Héritage
+Cube -u-|> Character
+Ship -u-|> Character
+Wave -u-|> Character
+
+' Composition
+Level *-- MapItem
+
+' Aggregation
+Game o-- Level
+Game o-- Prefab
+Game o-- Character
+
+' Associations simples
+PortalType -u-> CharacterPortal
+
+JumpOrb --> Character
+JumpPad --> Character
+DeathZone --> Character
+EndZone --> Character
+CharacterPortal -r-> Character
+ProgressBar --> Character
+
+@enduml
