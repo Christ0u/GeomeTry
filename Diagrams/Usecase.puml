@@ -5,40 +5,18 @@ title Diagramme de cas d'utilisation - GeomeTry
 actor Joueur
 
 rectangle "Menu principal" {
-        
-    Joueur ---> (Jouer)
+    Joueur -d-> (Jouer)
     (Jouer) ..> (Choisir un niveau) : <<include>>
-    (Jouer) <.left. (Importer un niveau) : <<extends>>
-    (Jouer) <.. (Jouer en mode practice) : <<extends>>
-
-    Joueur --> (Créer un niveau)
-    (Créer un niveau) <.. (Importer un niveau) : <<extends>>
-
-    Joueur --> (Modifier les options)
-
-    rectangle Options {
-        (Modifier les options) <.left.. (Modifier les contrôles) : <<extends>>
-        (Modifier les options) <... (Modifier la résolution) : <<extends>>
-        (Modifier les options) <... (Modifier le volume) : <<extends>>
-    }
-
-    Joueur --> (Appliquer des cosmétiques)
-
-    Joueur --> (Consulter les succès)
-
     Joueur --> (Quitter le jeu)
 }
 
 rectangle Partie {
-    Jouer <.up. (Mettre en pause) : <<extends>>
-    Jouer <.up. (Sauter) : <<extends>>
-    Jouer <.up. (Ajouter un checkpoint) : <<extends>> {if practice mode}
-    Jouer <.up. (Supprimer un checkpoint) : <<extends>> {if practice mode}
+    (Jouer) <.. (Mettre en pause) : <<extends>>
+    (Jouer) <.. (Sauter) : <<extends>>
 
     rectangle Pause {
-    (Mettre en pause) <.up. (Reprendre la partie) : <<extends>>
-    (Mettre en pause) <.up. (Quitter la partie) : <<extends>> 
-    (Mettre en pause) <.up. (Recommencer la partie) : <<extends>>
+        (Mettre en pause) <.. (Reprendre la partie) : <<extends>>
+    }
 }
 
 @enduml
