@@ -1,4 +1,10 @@
-@startuml
+@startuml GeomeTry
+
+enum PortalType {
+    CubePortal
+    ShipPortal
+    WavePortal
+}
 
 class ExitButton {
     - UIManager _uiManager
