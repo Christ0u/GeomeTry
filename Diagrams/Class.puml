@@ -1,137 +1,283 @@
 @startuml
 
+class ExitButton {
+    - UIManager _uiManager
+    - Sprite exitDoorClose
+    - Sprite exitDoorOpen
+    - AudioClip openDoorSound
+    - AudioClip closeDoorSound
+    - Button button
+    - Image buttonImage
+    - AudioSource audioSource
+
+    + void Start()
+    + void OnMouseEnter()
+    + void OnMouseExit()
+}
+
+abstract class Character {
+    # GameManager _gameManager
+    + float currentSpeed
+    # const float DefaultSpeed
+    # const float DefaultGravityScale
+    # float jumpForce
+    # float rotationSpeed
+    # bool _isGrounded
+    + const float InitialPosition
+    + bool isAlive
+
+    # Rigidbody2D rb
+    # LayerMask groundLayer
+    # SpriteRenderer spriteRenderer
+    # ParticleSystem _particleSystem
+    # Animator animator
+    # AudioSource deathSfx
+
+    # Vector3 respawnPosition
+    # bool keyPressed
+
+    # void Start()
+    # void FixedUpdate()
+    # void Update()
+    + abstract void onClick()
+    # bool CheckGrounded()
+    # void HandleMovement()
+    + void Die()
+    - void Respawn()
+    # void DettachParticleSystem()
+    # void ReattachParticleSystem()
+    # void OnDrawGizmos()
+}
+
+class Cube {
+    + void Update()
+    + void onClick()
+    - void Jump()
+    + void HandleMovement()
+    - void RotateSprite()
+}
+
+class Ship {
+    - float gravityScale
+    - float maxVelocityY
+    - bool isFlying
+
+    # void Start()
+    + void onClick()
+    # void HandleMovement()
+    # bool CheckGrounded()
+    # void FixedUpdate()
+}
+
+class Wave {
+    - float _modifier
+
+    # void Start()
+    # void FixedUpdate()
+    # void HandleMovement()
+    # void Update()
+    + void onClick()
+}
+
+class PauseManager {
+    - GameObject pauseMenuUI
+    - GameManager _gameManager
+    - bool isPaused
+    - AudioSource audioSource
+    - Dictionary<AudioSource, float> audioTimePositions
+
+    - void Awake()
+    - void Update()
+    + void TogglePause()
+    + void PauseGame()
+    + void ResumeGame()
+}
+
+class CharacterPortal {
+    + enum PortalType { CubePortal, ShipPortal, WavePortal }
+    - PortalType portalType
+    - GameObject cubePrefab
+    - GameObject shipPrefab
+    - GameObject wavePrefab
+    - bool isOnCooldown
+
+    - void OnTriggerEnter2D(Collider2D collision)
+    - void ResetCooldown()
+    - void TransformPlayer(Character character)
+}
+
+class Camera {
+    + Transform player
+    + Vector3 offset
+    - float _smoothSpeed
+    - float _startFollowingXPosition
+    - float _endFollowingXPosition
+    - bool _isFollowing
+    - bool _isEndObjectFound
+
+    - void Update()
+    - void FixedUpdate()
+}
+
+class DeathZone {
+    - Character player
+
+    - void OnTriggerEnter2D(Collider2D other)
+}
+
+class DevUtils {
+    + Color backgroundMenuColor
+    + int backgroundIndex
+    + int backgroundQuantity
+
+    - void Awake()
+    - void CountBackgroundFiles()
+    + int GenerateRandomInt(int min, int max)
+    + Color GenerateRandomColor()
+}
+
+class EndZone {
+    - Character player
+    - GameObject completedLevelCanvas
+    - GameManager _gameManager
+
+    - void Start()
+    - void OnTriggerEnter2D(Collider2D other)
+    - void LoadLevelSelectionMenu()
+}
+
 class Game {
-    - levels : List<Level>
-    - gameMode : GameMode
-    + launchLevel(Level, Player) : void
-    + endGame() : void
-    + placeCheckpoint() : void
-    + removeCheckpoint() : void
-    - restartPosition(Checkpoint) : void
+    + GameObject CharacterInstance
+    + GameObject Ground
+    + Tilemap Tilemap
+    - GameMode _gameMode
+    - Level _level
+    - AudioSource audioSource
+
+    + void Start()
+    - void LaunchLevel(Level level)
+    + void Update()
+    - void ExportCurrentMapToJson()
+}
+
+class GameManager {
+    {static} GameManager Instance
+    + UIManager uiManager
+    + TextAsset SelectedLevelFile
+    + Level SelectedLevel
+    + bool PlayMode
+
+    - void Awake()
+    + void LoadLevel(TextAsset levelFile)
+    + IEnumerator LoadScene(string sceneName)
+    - bool SceneExists(string sceneName)
+}
+
+class JumpOrb {
+    - static Dictionary<string, float> _jumpOrbForces
+
+    - float getJumpForce()
+    - void OnTriggerStay2D(Collider2D other)
+}
+
+class JumpPad {
+    - static Dictionary<string, float> _jumpPadForces
+    - Character player
+
+    - float getJumpForce()
+    - void OnTriggerEnter2D(Collider2D other)
 }
 
 class Level {
-    - levelId : int
-    - levelName : string
-    - difficulty : int [1-10]
-    - map : Map
-    
-    + generateLevel(map) : void
+    + int Id
+    + string Name
+    + int Difficulty
+    + List<MapItem> Map
+    + AudioClip Music
+    - MapItem _lastMapItem
+
+    + Level(TextAsset mapFile)
+    + MapItem getLastMapItem()
+    + int getHighestY(int startX, int endX)
 }
 
-class Player {
-    + playerName : string
+class LevelManager {
+    - DevUtils _devUtils
+    - UIManager _uiManager
 
-}
-class PlayerStatistics {
-    - totalJumps : int
-    - totalAttempts : int
-    - collectedCoins : int
-    - completedLevels : int
-    + displayStatistics() : void
+    - void Awake()
+    - void Start()
+    - void SetLevel()
+    - void SetBackground(Canvas canvas, int backgroundNumber, Color backgroundColor)
 }
 
-class LevelStatistics {
-    - totalAttempts : int
-    - totalJumps : int
-    + displayStatistics() : void
+struct MapItem {
+    + string Type
+    + int X
+    + int Y
+    + int Rotation
+    + float XOffset
+    + float YOffset
+
+    + MapItem(string type, int x, int y, int rotation, float xOffset, float yOffset)
 }
 
-abstract Character {
-    # {static} defaultSpeed : float
-    # currentSpeed : float
-    # moveVector : Vector2
-    # gravity : float
-    # isAlive : bool
-    # currentPosition : Tuple
-    + {abstract} onClick() : void
-    ' Kill character ?? ' 
+class Prefab <<static>> {
+    - static GameObject Tile
+    - static GameObject SmallTile
+    - static GameObject Spike
+    - static GameObject SmallSpike
+    - static GameObject ShipPortal
+    - static GameObject CubePortal
+    - static GameObject WavePortal
+    - static GameObject YellowJumpPad
+    - static GameObject PinkJumpPad
+    - static GameObject RedJumpPad
+    - static GameObject YellowJumpOrb
+    - static GameObject PinkJumpOrb
+    - static GameObject RedJumpOrb
+    - static GameObject EndWall
+    + static Dictionary<string, GameObject> Prefabs
+
+    {static} Prefab()
 }
 
-struct Checkpoint {
-    - checkpointPosition : Tuple
+class ProgressBar {
+    + Image mask
+    + TextMeshProUGUI textMesh
+    - Transform player
+    - float startPosition
+    - float endPosition
+    - float currentFillAmount
+
+    - void Start()
+    - void Update()
+    - void FindPlayer()
+    - void FindEndObject()
+    - void SetProgress()
 }
 
-' note right of Character : Pour l'instant, moveDirection est un bool\n 0 pour la droite et 1 pour la gauche
+class UIManager {
+    - GameManager _gameManager
+    - DevUtils _devUtils
+    - GameObject backgroundPrefab
+    - Image _backgroundImage
+    - Canvas _canvas
 
-
-class Cube {
-    + onClick() : void
+    - void Awake()
+    - void Start()
+    - void OnDestroy()
+    - void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    + void OnClickQuitGame()
+    + void OnClickYouTubeButton()
+    + void OnClickSwitchSceneButton(string sceneName)
+    + void OnClickGoBackButton()
+    + void OnClickLevelButton(Level level, TextAsset levelFile)
+    - void ApplyMenuBackground()
+    - (float, float, float, float) GetBackgroundSizes(Canvas canvas, GameObject backgroundObject, int scale = 5)
+    - void SetBackgroundSettings(GameObject backgroundObject, int backgroundNumber, Color backgroundColor)
+    - void SetBackgroundPosition(GameObject backgroundContainer, GameObject backgroundObject, int xIndex, int yIndex, float bgWidth, float bgHeight)
+    + void SetBackground(Canvas canvas, int backgroundNumber, Color backgroundColor)
 }
-class Ship {
-    + onClick() : void
-}
-class Wave {
-    - gravity = 0
-    + onClick() : void
-}
-
-abstract Portal {
-    - portalPosition : Tuple
-}
-
-' note top of CharacterPortal : Ce sont les portails qui vont\n modifier le type de joueur
-class CharacterPortal {
-    - portalType : PortalType
-    + transformPlayer(Player, PortalType)
-}
-
-class GravityPortal {
-    - gravityModifier : float
-    + modifyGravity(gravityModifier, Player) : void
-}
-
-class SpeedPortal {
-    - speedModifier : float
-    + modifySpeed(speedModifier, Player) : void
-}
-
-class TeleportationPortal {
-    + teleportPlayer(x, y)
-}
-
-class Obstacle {
-    - obstaclePosition : Tuple
-    - obstacleType : ObstacleType
-}
-
-enum PortalType {
-    CubePortal
-    ShipPortal
-    WavePortal
-}
-
-enum ObstacleType {
-    Spike
-    SmallSpike
-    Blade
-    SawBlade
-}
-
-enum GameMode {
-    Normal
-    Practice
-} 
-
-Player "1" -- "1" Character :  posséder 
-Player "1" -- "1" PlayerStatistics : posséder
-
-Game "1" -- "1" Player : jouer
-Game *-- Level
-Game "1" o-- "0..*" Checkpoint 
-
-Level *-- Obstacle
-Level o-- Portal
-Level "1" -left "1" LevelStatistics : posséder 
-
-Character <|-- Cube
-Character <|-- Ship
-Character <|-- Wave
-
-Portal <|-- CharacterPortal
-
-Portal <|-- GravityPortal
-Portal <|-- SpeedPortal
-Portal <|-- TeleportationPortal
 
 @enduml
