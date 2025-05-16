@@ -56,7 +56,6 @@ Level *-- MapItem
 Game o-- Level
 Game o-- Prefab
 Game o-- Character
-Game o-- Tilemap
 
 ' Associations simples
 PortalType -u-> CharacterPortal
