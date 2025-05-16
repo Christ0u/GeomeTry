@@ -56,15 +56,35 @@ Level *-- MapItem
 Game o-- Level
 Game o-- Prefab
 Game o-- Character
+Game o-- Tilemap
 
 ' Associations simples
 PortalType -u-> CharacterPortal
 
 JumpOrb --> Character
 JumpPad --> Character
+
 DeathZone --> Character
+
 EndZone --> Character
+EndZone --> GameManager
+
+UIManager --> GameManager
+UIManager --> DevUtils
+UIManager --> PauseManager
+UIManager --> ExitButton
+
+GameManager --> PauseManager
+GameManager --> UIManager
+
+LevelManager --> UIManager
+
 CharacterPortal -r-> Character
+
 ProgressBar --> Character
+
+Camera --> Character
+
+LevelSelectionManager --> UIManager
 
 @enduml
