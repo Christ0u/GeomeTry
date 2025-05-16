@@ -13,9 +13,6 @@ public class Level
     public AudioClip Music { get; private set; }
     private MapItem _lastMapItem;
 
-    // Rajouter une propriété pour le fond
-    // Rajouter une propriété pour le sol ?
-
     // Constructeur
     public Level(TextAsset mapFile)
     {
@@ -53,7 +50,6 @@ public class Level
 
         // Chargement de la musique
         Music = Resources.Load<AudioClip>("Songs/Musics/" + jsonData["music"].stringValue);
-        //Debug.Log("Chargement de la musique " + Music.name);
     }
 
     public MapItem getLastMapItem()

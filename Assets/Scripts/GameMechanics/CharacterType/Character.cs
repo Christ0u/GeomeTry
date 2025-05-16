@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public abstract class Character : MonoBehaviour
 {
@@ -73,13 +72,7 @@ public abstract class Character : MonoBehaviour
         return frontHit.collider != null || backHit.collider != null;
     }
 
-    protected virtual void HandleMovement()
-    {
-        // Cube jump
-        // Ship burst
-        // ...
-        // wave
-    }
+    protected virtual void HandleMovement() { }
 
     public virtual void Die()
     {
@@ -103,7 +96,6 @@ public abstract class Character : MonoBehaviour
         }
 
         // Relance le jeu après 1 seconde
-        //Invoke(nameof(Respawn), 1.0f);
         Invoke(nameof(Respawn), 1.0f);
     }
 
@@ -122,7 +114,7 @@ public abstract class Character : MonoBehaviour
         var cameraInstance = FindFirstObjectByType<Camera>();
         if (cameraInstance != null)
             cameraInstance.player = newCube.transform;
-        
+
         isAlive = true;
     }
 

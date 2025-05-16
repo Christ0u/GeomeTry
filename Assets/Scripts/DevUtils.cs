@@ -7,24 +7,6 @@ public class DevUtils : MonoBehaviour
 {
     public Color backgroundMenuColor;
     public int backgroundIndex;
-
-    // FINALEMENT PAS UTILISER MAIS JE LAISSE ICI, L'IDEE PEUT ETRE INTERESSANTE
-
-    // // Liste des scènes pour lesquelles un fond spécifique doit être appliqué
-    // List<string> menuScenes = new List<string>
-    // {
-    //     "Main Menu",
-    //     "Customisation",
-    //     "Settings",
-    //     "Credits",
-    //     "Stats",
-    //     "Success",
-    //     "Profile",
-    //     "Level Selection",
-    //     "Level Editor"
-    // };
-
-    // Count
     public int backgroundQuantity;
 
     private void Awake()

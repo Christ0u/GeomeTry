@@ -51,7 +51,6 @@ public class UIManager : MonoBehaviour
     public void OnClickQuitGame()
     {
 #if UNITY_EDITOR
-        //Debug.Log("Appel à la fonction OnClickQuitGame - Ne marche que en build.");
 #else
         Application.Quit();
 #endif
@@ -71,14 +70,10 @@ public class UIManager : MonoBehaviour
     /// <param name="sceneName">Nom de la scène à charger.</param>
     public void OnClickSwitchSceneButton(string sceneName)
     {
-        //Debug.Log("Scène actuelle : " + SceneManager.GetActiveScene().name);
-
         if (!PlayerPrefs.HasKey("previousScene"))
         {
             PlayerPrefs.SetString("previousScene", SceneManager.GetActiveScene().name);
         }
-
-        //Debug.Log("Scène précédente enregistrée : " + PlayerPrefs.GetString("previousScene"));
 
         // Si _gameManager est null, le récupérer
         if (_gameManager == null)
@@ -108,9 +103,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        //Debug.Log("Chargement de la scène précédente : " + PlayerPrefs.GetString("previousScene"));
         SceneManager.LoadScene(PlayerPrefs.GetString("previousScene"));
-        //Debug.Log("Fin du chargement de la scène précédente.");
     }
 
     /// <summary>
@@ -118,8 +111,6 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OnClickLevelButton(Level level, TextAsset levelFile)
     {
-        //Debug.Log($"Click sur le niveau : {level.Name}");
-
         if (_gameManager == null)
         {
             _gameManager = GameManager.Instance;
@@ -154,13 +145,11 @@ public class UIManager : MonoBehaviour
 
         if (_canvas != null && _devUtils != null && !SceneManager.GetActiveScene().name.Equals("Level"))
         {
-            //Debug.Log("Application du fond...");
             SetBackground(_canvas, _devUtils.backgroundIndex, _devUtils.backgroundMenuColor);
         }
 
         if (SceneManager.GetActiveScene().name.Equals("Level"))
         {
-            //Debug.Log("Application du fond générique des niveaux...");
             SetBackground(_canvas, _devUtils.GenerateRandomInt(1, _devUtils.backgroundQuantity), _devUtils.GenerateRandomColor());
         }
     }
@@ -202,7 +191,6 @@ public class UIManager : MonoBehaviour
         if (newSprite != null)
         {
             _backgroundImage.sprite = newSprite;
-            //Debug.Log($"Image {imagePath} chargée avec succès.");
         }
         else
         {

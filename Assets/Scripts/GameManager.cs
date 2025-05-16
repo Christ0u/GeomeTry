@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     {
         if (!SceneExists(sceneName))
         {
-            //Debug.Log("La scène " + sceneName + " n'existe pas ou n'est pas ajouté dans le Build"); 
             yield break;
         }
 
@@ -52,7 +51,6 @@ public class GameManager : MonoBehaviour
 
         if (loadSceneAsync == null)
         {
-            //Debug.Log("loadSceneAsync vaut null!");
             yield break;
         }
 

@@ -44,8 +44,6 @@ public class EndZone : MonoBehaviour
                 _gameManager.PlayMode = false;
             }
 
-            //Debug.Log("You win!");
-
             // Activer le Canvas
             if (completedLevelCanvas != null)
             {

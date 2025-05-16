@@ -19,13 +19,6 @@ public class Ship : Character
         isFlying = keyPressed;
     }
 
-    // première essai pour le vol, remplacé par onClick, je le laisse pour l'instant ça peut être utile
-    // protected override void Update()
-    // {
-    //     base.Update();
-    //     isFlying = Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0);
-    // }
-
     protected override void HandleMovement()
     {
         if (!isAlive) return; // Si le vaisseau est pas vivant

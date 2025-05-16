@@ -46,14 +46,7 @@ public class PauseManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //Debug.Log("Touche Echap pressée - Basculement pause");
             TogglePause();
-        }
-
-        // Surveiller l'état du menu
-        if (pauseMenuUI != null)
-        {
-            //Debug.Log($"État du menu pause: {(pauseMenuUI.activeSelf ? "visible" : "caché")}, isPaused: {isPaused}");
         }
     }
 

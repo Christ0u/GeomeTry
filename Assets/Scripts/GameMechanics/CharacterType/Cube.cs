@@ -48,7 +48,7 @@ public class Cube : Character
             float rotationAmount = rotationSpeed * Time.deltaTime;
             spriteRenderer.transform.Rotate(0, 0, -rotationAmount);
         }
-        else // il faudrait un petit timer qu'on reset si on detect un saut pour pas snap tout de suite.
+        else
         {
             float currentRotation = spriteRenderer.transform.eulerAngles.z;
             float snappedRotation = Mathf.Round(currentRotation / 90) * 90;
