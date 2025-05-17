@@ -1,0 +1,17 @@
+@startuml CubeState
+title Diagramme d'état du cube - GeomeTry
+
+[*] --> Vivant
+
+state Vivant {
+    [*] --> Avance
+    Avance : avance vers la droite au sol
+    Avance --> EnSaut :  Appui sur \nla touche saut
+    EnSaut --> Avance : Fin du saut
+    EnSaut : avance vers la droite en l'air
+}
+
+Vivant --> Mort : Collision avec un obstacle
+Mort --> [*]
+
+@enduml

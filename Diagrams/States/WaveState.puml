@@ -1,0 +1,17 @@
+@startuml WaveState
+title Diagramme d'état du triangle - GeomeTry
+
+[*] --> Vivant
+
+state Vivant {
+    [*] --> Monte
+    Monte : Avance à 45° vers le haut
+    Monte --> Descend : Relâchement de \nla touche monter
+    Descend : Descend de -45° vers le sol
+    Descend --> Monte : Appui sur \nla touche monter
+}
+
+Vivant --> Mort : Collision avec \nun obstacle ou le sol
+Mort --> [*]
+
+@enduml

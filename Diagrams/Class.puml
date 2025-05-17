@@ -1,0 +1,343 @@
+@startuml GeomeTry
+
+enum PortalType {
+    CubePortal
+    ShipPortal
+    WavePortal
+}
+
+class ExitButton {
+    - UIManager _uiManager
+    - Sprite exitDoorClose
+    - Sprite exitDoorOpen
+    - AudioClip openDoorSound
+    - AudioClip closeDoorSound
+    - Button button
+    - Image buttonImage
+    - AudioSource audioSource
+
+    + void Start()
+    + void OnMouseEnter()
+    + void OnMouseExit()
+}
+
+abstract class Character {
+    # GameManager _gameManager
+    + float currentSpeed
+    # const float DefaultSpeed
+    # const float DefaultGravityScale
+    # float jumpForce
+    # float rotationSpeed
+    # bool _isGrounded
+    + const float InitialPosition
+    + bool isAlive
+
+    # Rigidbody2D rb
+    # LayerMask groundLayer
+    # SpriteRenderer spriteRenderer
+    # ParticleSystem _particleSystem
+    # Animator animator
+    # AudioSource deathSfx
+
+    # Vector3 respawnPosition
+    # bool keyPressed
+
+    # void Start()
+    # void FixedUpdate()
+    # void Update()
+    + abstract void onClick()
+    # bool CheckGrounded()
+    # void HandleMovement()
+    + void Die()
+    - void Respawn()
+    # void DettachParticleSystem()
+    # void ReattachParticleSystem()
+    # void OnDrawGizmos()
+}
+
+class Cube {
+    + void Update()
+    + void onClick()
+    - void Jump()
+    + void HandleMovement()
+    - void RotateSprite()
+}
+
+class Ship {
+    - float gravityScale
+    - float maxVelocityY
+    - bool isFlying
+
+    # void Start()
+    + void onClick()
+    # void HandleMovement()
+    # bool CheckGrounded()
+    # void FixedUpdate()
+}
+
+class Wave {
+    - float _modifier
+
+    # void Start()
+    # void FixedUpdate()
+    # void HandleMovement()
+    # void Update()
+    + void onClick()
+}
+
+class PauseManager {
+    - GameObject pauseMenuUI
+    - GameManager _gameManager
+    - bool isPaused
+    - AudioSource audioSource
+    - Dictionary<AudioSource, float> audioTimePositions
+
+    - void Awake()
+    - void Update()
+    + void TogglePause()
+    + void PauseGame()
+    + void ResumeGame()
+}
+
+class CharacterPortal {
+    + enum PortalType { CubePortal, ShipPortal, WavePortal }
+    - PortalType portalType
+    - GameObject cubePrefab
+    - GameObject shipPrefab
+    - GameObject wavePrefab
+    - bool isOnCooldown
+
+    - void OnTriggerEnter2D(Collider2D collision)
+    - void ResetCooldown()
+    - void TransformPlayer(Character character)
+}
+
+class Camera {
+    + Transform player
+    + Vector3 offset
+    - float _smoothSpeed
+    - float _startFollowingXPosition
+    - float _endFollowingXPosition
+    - bool _isFollowing
+    - bool _isEndObjectFound
+
+    - void Update()
+    - void FixedUpdate()
+}
+
+class DeathZone {
+    - Character player
+
+    - void OnTriggerEnter2D(Collider2D other)
+}
+
+class DevUtils {
+    + Color backgroundMenuColor
+    + int backgroundIndex
+    + int backgroundQuantity
+
+    - void Awake()
+    - void CountBackgroundFiles()
+    + int GenerateRandomInt(int min, int max)
+    + Color GenerateRandomColor()
+}
+
+class EndZone {
+    - Character player
+    - GameObject completedLevelCanvas
+    - GameManager _gameManager
+
+    - void Start()
+    - void OnTriggerEnter2D(Collider2D other)
+    - void LoadLevelSelectionMenu()
+}
+
+class Game {
+    + GameObject CharacterInstance
+    + GameObject Ground
+    + Tilemap Tilemap
+    - GameMode _gameMode
+    - Level _level
+    - AudioSource audioSource
+
+    + void Start()
+    - void LaunchLevel(Level level)
+    + void Update()
+    - void ExportCurrentMapToJson()
+}
+
+class GameManager {
+    {static} GameManager Instance
+    + UIManager uiManager
+    + TextAsset SelectedLevelFile
+    + Level SelectedLevel
+    + bool PlayMode
+
+    - void Awake()
+    + void LoadLevel(TextAsset levelFile)
+    + IEnumerator LoadScene(string sceneName)
+    - bool SceneExists(string sceneName)
+}
+
+class JumpOrb {
+    - static Dictionary<string, float> _jumpOrbForces
+
+    - float getJumpForce()
+    - void OnTriggerStay2D(Collider2D other)
+}
+
+class JumpPad {
+    - static Dictionary<string, float> _jumpPadForces
+    - Character player
+
+    - float getJumpForce()
+    - void OnTriggerEnter2D(Collider2D other)
+}
+
+class Level {
+    + int Id
+    + string Name
+    + int Difficulty
+    + List<MapItem> Map
+    + AudioClip Music
+    - MapItem _lastMapItem
+
+    + Level(TextAsset mapFile)
+    + MapItem getLastMapItem()
+    + int getHighestY(int startX, int endX)
+}
+
+class LevelManager {
+    - DevUtils _devUtils
+    - UIManager _uiManager
+
+    - void Awake()
+    - void Start()
+    - void SetLevel()
+    - void SetBackground(Canvas canvas, int backgroundNumber, Color backgroundColor)
+}
+
+class LevelSelectionManager {
+    - UIManager _uiManager
+    + GameObject buttonPrefab
+    + Transform levelContainer
+    - List<TextAsset> levelFiles
+
+    - void Awake()
+    - void Start()
+    - void LoadLevelFiles()
+    - void GenerateLevelButtons()
+}
+
+struct MapItem {
+    + string Type
+    + int X
+    + int Y
+    + int Rotation
+    + float XOffset
+    + float YOffset
+
+    + MapItem(string type, int x, int y, int rotation, float xOffset, float yOffset)
+}
+
+class Prefab <<static>> {
+    - static GameObject Tile
+    - static GameObject SmallTile
+    - static GameObject Spike
+    - static GameObject SmallSpike
+    - static GameObject ShipPortal
+    - static GameObject CubePortal
+    - static GameObject WavePortal
+    - static GameObject YellowJumpPad
+    - static GameObject PinkJumpPad
+    - static GameObject RedJumpPad
+    - static GameObject YellowJumpOrb
+    - static GameObject PinkJumpOrb
+    - static GameObject RedJumpOrb
+    - static GameObject EndWall
+    + static Dictionary<string, GameObject> Prefabs
+
+    {static} Prefab()
+}
+
+class ProgressBar {
+    + Image mask
+    + TextMeshProUGUI textMesh
+    - Transform player
+    - float startPosition
+    - float endPosition
+    - float currentFillAmount
+
+    - void Start()
+    - void Update()
+    - void FindPlayer()
+    - void FindEndObject()
+    - void SetProgress()
+}
+
+class UIManager {
+    - GameManager _gameManager
+    - DevUtils _devUtils
+    - GameObject backgroundPrefab
+    - Image _backgroundImage
+    - Canvas _canvas
+
+    - void Awake()
+    - void Start()
+    - void OnDestroy()
+    - void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    + void OnClickQuitGame()
+    + void OnClickYouTubeButton()
+    + void OnClickSwitchSceneButton(string sceneName)
+    + void OnClickGoBackButton()
+    + void OnClickLevelButton(Level level, TextAsset levelFile)
+    - void ApplyMenuBackground()
+    - (float, float, float, float) GetBackgroundSizes(Canvas canvas, GameObject backgroundObject, int scale = 5)
+    - void SetBackgroundSettings(GameObject backgroundObject, int backgroundNumber, Color backgroundColor)
+    - void SetBackgroundPosition(GameObject backgroundContainer, GameObject backgroundObject, int xIndex, int yIndex, float bgWidth, float bgHeight)
+    + void SetBackground(Canvas canvas, int backgroundNumber, Color backgroundColor)
+}
+
+' Héritage
+Cube -u-|> Character
+Ship -u-|> Character
+Wave -u-|> Character
+
+' Composition
+Level *-- MapItem
+
+' Aggregation
+Game o-- Level
+Game o-- Prefab
+Game o-- Character
+
+' Associations simples
+PortalType -u-> CharacterPortal
+
+JumpOrb --> Character
+JumpPad --> Character
+
+DeathZone --> Character
+
+EndZone --> Character
+EndZone --> GameManager
+
+UIManager --> GameManager
+UIManager --> DevUtils
+UIManager --> PauseManager
+UIManager --> ExitButton
+
+GameManager --> PauseManager
+GameManager --> UIManager
+
+LevelManager --> UIManager
+
+CharacterPortal -r-> Character
+
+ProgressBar --> Character
+
+Camera --> Character
+
+LevelSelectionManager --> UIManager
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+title Diagramme d'activité - Partie GeomeTry
+start
+
+:Charger le niveau;
+:Commencer le niveau;
+
+repeat
+    :Joueur avance automatiquement;
+    if (Bouton pressé ?) then (Oui)
+        :Sauter / Voler / Monter-Descendre;
+    else (Non)
+    endif
+
+    if (Collision détectée ?) then (Oui)
+        :Mort du personnage;
+        end;
+    else (Non)
+    endif
+repeat while (Fin du niveau ?) is (Non) not (Oui)
+
+:Afficher écran de victoire;
+stop
+@enduml
